@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gbi86&l1u=irs)hi14h9g9+8sr=(7!^_g!zpzsn!6thzyts)=l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dipins-portfolio.onrender.com', 'localhost', '127.0.0.1'] 
+ALLOWED_HOSTS = ['dipin-dawadi-portfolio.onrender.com', 'localhost', '127.0.0.1'] 
 
 # Application definition
 
