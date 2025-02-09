@@ -38,7 +38,7 @@ footer a {
     color: #000;
 }
 
-/* Mobile responsiveness (for header and footer text) */
+/* Mobile responsiveness for header/footer text */
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 2em;
@@ -57,7 +57,6 @@ footer a {
     }
 }
 
-/* Extra small screen (phones in portrait mode) */
 @media screen and (max-width: 480px) {
     h1 {
         font-size: 1.5em;
@@ -76,7 +75,7 @@ footer a {
     }
 }
 
-/* General styles */
+/* General styles and reset */
 * {
     margin: 0;
     padding: 0;
@@ -88,6 +87,7 @@ body {
     background-color: #2d2f3c;
     color: #2d2f3c;
     line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 header {
@@ -122,7 +122,10 @@ nav {
 nav ul {
     display: flex;
     justify-content: center;
+    align-items: center;
     list-style: none;
+    overflow-x: auto; /* Allow horizontal scrolling if necessary */
+    white-space: nowrap;
 }
 
 nav ul li {
@@ -135,6 +138,7 @@ nav ul li a {
     font-size: 1.2rem;
     font-weight: 500;
     transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
 }
 
 nav ul li a:hover {
@@ -297,67 +301,8 @@ section {
     object-fit: cover;
     border-radius: 15px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
+    margin: 20px auto;
     object-position: top center;
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-
-    .section-title {
-        font-size: 2.4rem;
-    }
-
-    /* Update Navbar for Mobile: Use reduced padding, keep horizontal layout */
-    nav {
-        position: relative;  /* remove sticky behavior on mobile */
-        padding: 0.75rem 0;
-    }
-    nav ul {
-        flex-direction: row;
-        overflow-x: auto;
-    }
-    nav ul li {
-        margin: 0 10px;
-    }
-    nav ul li a {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-    }
-
-    .card-body ul {
-        font-size: 1.1rem;
-    }
-
-    .contact-form button {
-        font-size: 1rem;
-    }
-
-    /* Skills Grid: reduce columns to 2 */
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 2rem;
-    }
-    header p {
-        font-size: 1rem;
-    }
-    nav ul li a {
-        font-size: 0.9rem;
-        padding: 0.5rem 0.75rem;
-    }
-    /* Skills Grid: use single column */
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Skills Grid */
@@ -365,6 +310,7 @@ section {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    margin-top: 20px;
 }
 
 .skill-card {
@@ -380,6 +326,7 @@ section {
     transform: scale(1.1);
 }
 
+/* Buttons */
 .btn-primary {
     background-color: #fd7e14;
     color: #fff;
@@ -395,6 +342,7 @@ section {
     background-color: #e56d19;
 }
 
+/* Certifications Grid */
 .certifications-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -514,4 +462,64 @@ section {
     align-items: center;
     flex-wrap: wrap;
     gap: 40px;
+}
+
+/* Media Queries for Responsive Adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    header p {
+        font-size: 1.2rem;
+    }
+    nav {
+        position: relative;
+        padding: 0.75rem 0;
+    }
+    nav ul {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    nav ul li a {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    .container {
+        width: 95%;
+    }
+    .section-title {
+        font-size: 2.4rem;
+    }
+    .card-body ul {
+        font-size: 1.1rem;
+    }
+    .contact-form button {
+        font-size: 1rem;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    nav ul li a {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .container {
+        width: 100%;
+        padding: 0 10px;
+    }
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
 }
