@@ -38,7 +38,7 @@ footer a {
     color: #000;
 }
 
-/* Mobile responsiveness */
+/* Mobile responsiveness (for header and footer text) */
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 2em;
@@ -312,12 +312,21 @@ section {
         font-size: 2.4rem;
     }
 
-    nav ul {
-        flex-direction: column;
+    /* Update Navbar for Mobile: Use reduced padding, keep horizontal layout */
+    nav {
+        position: relative;  /* remove sticky behavior on mobile */
+        padding: 0.75rem 0;
     }
-
+    nav ul {
+        flex-direction: row;
+        overflow-x: auto;
+    }
     nav ul li {
-        margin: 15px 0;
+        margin: 0 10px;
+    }
+    nav ul li a {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
     }
 
     .card-body ul {
@@ -327,8 +336,31 @@ section {
     .contact-form button {
         font-size: 1rem;
     }
+
+    /* Skills Grid: reduce columns to 2 */
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    nav ul li a {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+    /* Skills Grid: use single column */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Skills Grid */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -482,28 +514,4 @@ section {
     align-items: center;
     flex-wrap: wrap;
     gap: 40px;
-}
-
-/* Additional Media Queries for Header and Skills Grid */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2.5rem;
-    }
-    header p {
-        font-size: 1.2rem;
-    }
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 2rem;
-    }
-    header p {
-        font-size: 1rem;
-    }
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
 }
