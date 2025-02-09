@@ -483,3 +483,27 @@ section {
     flex-wrap: wrap;
     gap: 40px;
 }
+
+/* Additional Media Queries for Header and Skills Grid */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+    header p {
+        font-size: 1.2rem;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
