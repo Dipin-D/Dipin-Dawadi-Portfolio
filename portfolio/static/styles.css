@@ -119,13 +119,15 @@ nav {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Allow horizontal scrolling for the nav */
 nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
-    overflow-x: auto; /* Allow horizontal scrolling if necessary */
+    overflow-x: auto; /* Enable horizontal scroll */
     white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 nav ul li {
@@ -143,6 +145,23 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #fd7e14;
+}
+
+/* Gradient indicator for scrollable nav on small devices */
+@media (max-width: 768px) {
+    nav {
+        position: relative;
+    }
+    nav::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 40px;
+        pointer-events: none;
+        background: linear-gradient(to left, #1e2a37, rgba(30,42,55,0));
+    }
 }
 
 section {
