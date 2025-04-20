@@ -65,22 +65,6 @@
     transform: scale(1.05);
 }
 
-@media (max-width: 600px) {
-    .page {
-        flex: 1 1 100%; /* each image takes full width on small screens */
-        max-width: 100%; /* override max-width */
-        padding: 5px;
-    }
-
-    .flip-book {
-        padding: 5px;
-        gap: 10px;
-    }
-
-    .page img {
-        border-radius: 10px;
-    }
-}
 
 
 h1 {
@@ -131,14 +115,14 @@ body {
 
 header {
     text-align: center;
-    padding: 10px;
+    padding: 20px;
     background-color: #f0f0f0;
     position: relative; /* Ensure header is above the effects */
     z-index: 2;
 }
 
 .content {
-    padding: 10px;
+    padding: 20px;
     position: relative;
     z-index: 2;
 }
@@ -164,7 +148,7 @@ p {
 }
 
 .content {
-    padding: 10px;
+    padding: 20px;
 }
 
 
@@ -388,13 +372,11 @@ section {
 }
 
 .card {
-    margin: 15px 0; /* top and bottom margin only */
-    width: 100%;     /* full width */
+    margin: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 .card:hover {
     transform: translateY(-10px);

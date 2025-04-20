@@ -65,22 +65,6 @@
     transform: scale(1.05);
 }
 
-@media (max-width: 600px) {
-    .page {
-        flex: 1 1 100%; /* each image takes full width on small screens */
-        max-width: 100%; /* override max-width */
-        padding: 5px;
-    }
-
-    .flip-book {
-        padding: 5px;
-        gap: 10px;
-    }
-
-    .page img {
-        border-radius: 10px;
-    }
-}
 
 
 h1 {
@@ -164,7 +148,7 @@ p {
 }
 
 .content {
-    padding: 10px;
+    padding: 20px;
 }
 
 
