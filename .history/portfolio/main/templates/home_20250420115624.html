@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Particles Background -->
+<div id="particles-js"></div>
+
+<!-- Your main content (keep everything else as-is) -->
+<div class="content">
+    <!-- Your current landing sections go here -->
+    <!-- Example: -->
+    <nav> ... </nav>
+    <section id="about"> ... </section>
+    <section id="skills"> ... </section>
+    <section id="experience"> ... </section>
+    <section id="project"> ... </section>
+    <section id="certifications"> ... </section>
+    <section id="contact"> ... </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Load particles.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<!-- Initialize particles -->
+<script>
+  particlesJS.load('particles-js', 'https://vincentgarreau.com/particles.js/particles.json', function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+{% endblock %}

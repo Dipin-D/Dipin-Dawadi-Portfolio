@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main-content" >
+    <div id="particles-js"></div>
+
+<!-- Hamburger icon -->
+<div class="menu-toggle">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul class="navbar-list">
+      <li class="navbar-item"><a href="#about">About</a></li>
+      <li class="navbar-item"><a href="#skills">Skills</a></li>
+      <li class="navbar-item"><a href="#experience">Experience</a></li>
+      <li class="navbar-item"><a href="#project">Project</a></li>
+      <li class="navbar-item"><a href="#certifications">Certifications</a></li>
+      <li class="navbar-item"><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  
+
+<section id="about" class="animation-fade">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+                {% load static %}
+                <img src="{% static 'image.JPG' %}" alt="Your Picture">
+            </div>
+            <div class="about-text">
+                <p>
+                    I am a driven and innovative professional specializing in computer science, wireless engineering, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape, making each project an opportunity for growth and discovery.
+                </p>
+                <p>
+                    Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Skills Section -->
+<section id="skills" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <p>Below are some of the skills I have honed during my academic and professional journey:</p>
+        <div class="skills-grid">
+            <div class="skill-card"><p>SAP S/4HANA</p></div>
+            <div class="skill-card"><p>Tech Consulting</p></div>
+            <div class="skill-card"><p>Python & Django</p></div>
+            <div class="skill-card"><p>Power BI & Data Analysis</p></div>
+            <div class="skill-card"><p>MS SQL Server</p></div>
+            <div class="skill-card"><p>Java & C++</p></div>
+            <div class="skill-card"><p>JavaScript & Web Design</p></div>
+            <div class="skill-card"><p>Google & Microsoft Suites</p></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Experience Section -->
+<section id="experience" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Undergraduate Software Researcher – CMS & AWS Integration
+                    </div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/cms.PNG' %}" alt="mage" class="img-fluid">
+                        </div>
+                        <ul>
+                            <li><strong>Institution:</strong> Alabama Agricultural and Mechanical University</li>
+                            <li><strong>GitHub:</strong> <a href="https://github.com/Dipin-D/SMRT-CMS" target="_blank">SMRT CMS</a></li>
+                            <li><strong>Duration:</strong> Sep 2024 - Present</li>
+                            <li><strong>Location:</strong> Hybrid</li>
+                            <li><strong>Description:</strong> 
+                                Researched innovative solutions to enhance CMS, developed using Python, HTML/CSS, and JavaScript, leveraging AWS EC2 for hosting, PostgreSQL RDS for database management, S3 for file storage, and GoDaddy for domain management. The platform has been launched at <a href="https://www.aamusmartcms.com" target="_blank">www.aamusmartcms.com</a>, is currently in the User Acceptance Testing phase, and will be used by over 500 students each semester. Data collected will be utilized for a machine learning reinforcement model.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'experiences' %}" class="btn btn-primary">View Full Experience</a> 
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="project" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">App Developer & Pitch Competitor | App Build Pitch Competition</div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/app_pitch_competition.gif' %}" alt="App Build Pitch Competition Image" class="img-fluid">
+                        </div>
+                        <p><strong>Duration:</strong> Apr 2025</p>
+                        <p><strong>Location:</strong> Montgomery, Alabama, United States (On-site)</p>
+                        <p><strong>Description:</strong></p>
+                        <p>Selected among the Top 10 teams in The Alabama Collective's HBCU App Build Pitch Competition and traveled to Montgomery to present our solution to a panel of judges and mentors. During this experience, I gained direct exposure to UI/UX design, pitching, problem-solving, and community-based innovation.</p>
+                        <p>We developed and presented a mobile app aimed at expanding visibility for Black and minority-owned businesses. Key features of the app included:</p>
+                        <ul>
+                            <li>An online directory to search businesses</li>
+                            <li>A portal to search and register businesses</li>
+                            <li>An AI-based virtual counselor to assist business owners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'projects' %}" class="btn btn-primary">View All Projects</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certifications Section -->
+<section id="certifications" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+            <div class="certification-card">
+                <a href="https://certificate.propelcenter.org/e11aee9d-e375-4d4e-9281-b260f049a3ba#acc.QOZcKaNJ" target="_blank" class="cert-link">
+                    <h3>Socially Just Coding: Develop in Swift Explorations Pt. 1</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://certificate.propelcenter.org/bb1543e2-6b61-49fe-a8c1-e402ce4130c7#acc.MN50j6JU" target="_blank" class="cert-link">
+                    <h3>How Does AI/ML Impact Culture?</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.hackerrank.com/certificates/iframe/3ff3457195a4" target="_blank" class="cert-link">
+                    <h3>Python Programming Language</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.linkedin.com/posts/dipin-dawadi_certificate-of-completion-activity-7062963649803423744-30ah" target="_blank" class="cert-link">
+                    <h3>Codepath- Cybersecurity 101</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.hackerrank.com/certificates/2a9105be80c1" target="_blank" class="cert-link">
+                    <h3>SQL (Intermediate) Certificate</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.credly.com/badges/4102e608-8a36-4e91-9776-768b3ccf490d/linked_in_profile" target="_blank" class="cert-link">
+                    <h3>SFEPD Mind Over Money Skills Financial Literacy Certification
+                    </h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <form class="contact-form" action="mailto:dipin.dawadi@bulldogs.aamu.edu" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</section>
+</div>
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navbar = document.querySelector('.navbar');
+      const navItems = document.querySelectorAll('.navbar-item');
+    
+      let navOpen = false;
+    
+      menuToggle.addEventListener('click', () => {
+        navOpen = !navOpen;
+    
+        if (navOpen) {
+          navbar.classList.add('open');
+    
+          gsap.fromTo(navItems,
+            { opacity: 0, y: -30 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.1,
+              duration: 0.5,
+              ease: 'expo.out'
+            }
+          );
+        } else {
+          gsap.to(navItems, {
+            opacity: 0,
+            y: -30,
+            duration: 0.3,
+            stagger: -0.1,
+            ease: 'expo.in',
+            onComplete: () => navbar.classList.remove('open')
+          });
+        }
+      });
+    </script>
+    
+</script>
+
+{% endblock %}

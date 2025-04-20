@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- AOS & VanillaTilt CDN -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+
+<!-- Navigation -->
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#project">Project</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- About Section -->
+<section id="about" data-aos="fade-up" class="tilt-box">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <div class="about-image">
+        <img src="{% static 'image.JPG' %}" alt="Your Picture">
+      </div>
+      <div class="about-text">
+        <p>
+          I am a driven and innovative professional... [your about text]
+        </p>
+        <p>
+          Outside of work, I enjoy engaging in... [your about text]
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" data-aos="fade-up" class="tilt-box">
+  <div class="container">
+    <h2 class="section-title">Skills</h2>
+    <p>Below are some of the skills I have honed...</p>
+    <div class="skills-grid">
+      {% for skill in "Python & Django,NumPy & Pandas,Power BI & Data Analysis,MS SQL Server,Java & C++,JavaScript & Web Design,Machine Learning,Google & Microsoft Suites".split(",") %}
+        <div class="skill-card" data-tilt><p>{{ skill }}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" data-aos="fade-up" class="tilt-box">
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+    <div class="row">
+      <div class="col-md-4" data-tilt>
+        <div class="card">
+          <div class="card-header">Research Assistant</div>
+          <div class="card-body">
+            <img src="{% static 'images/cms.PNG' %}" class="img-fluid" alt="CMS">
+            <ul>
+              <li><strong>Institution:</strong> Alabama A&M</li>
+              <li><strong>GitHub:</strong> <a href="https://github.com/Dipin-D/SMRT-CMS" target="_blank">SMRT CMS</a></li>
+              <li><strong>Duration:</strong> Aug 2024 - Present</li>
+              <li><strong>Description:</strong> [your description]</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="{% url 'experiences' %}" class="btn btn-primary">View Full Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="project" data-aos="fade-up" class="tilt-box">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    <div class="row">
+      <div class="col-md-4" data-tilt>
+        <div class="card">
+          <div class="card-header">Customer Churn Insights</div>
+          <div class="card-body">
+            <img src="{% static 'images/customer.PNG' %}" class="img-fluid" alt="Project Image">
+            <ul>
+              <li><strong>Duration:</strong> Jan 2025 – Present</li>
+              <li><a href="https://colab.research.google.com/drive/..." target="_blank">Colab Notebook</a></li>
+              <li><strong>Description:</strong> [your description]</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="{% url 'projects' %}" class="btn btn-primary">View All Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications Section -->
+<section id="certifications" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">Certifications</h2>
+    <div class="certifications-grid">
+      {% for cert in certifications %}
+        <div class="certification-card" data-tilt>
+          <a href="{{ cert.link }}" target="_blank">
+            <h3>{{ cert.title }}</h3>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">Contact</h2>
+    <form class="contact-form" action="mailto:dipin.dawadi@bulldogs.aamu.edu" method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</section>
+
+<!-- Init AOS -->
+<script>
+  AOS.init();
+  VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.3
+  });
+</script>
+
+{% endblock %}

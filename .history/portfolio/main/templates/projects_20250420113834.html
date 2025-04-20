@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects - Dipin Dawadi{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<section id="projects" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="row">
+            <!-- Card 1: Customer Churn Insights & Prediction -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Customer Churn Insights & Prediction</div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/customer.PNG' %}" alt="Data Science Scholar Image" class="img-fluid">
+                        </div>
+                        <ul>
+                            <li><strong>Google Colab:</strong> <a href="https://colab.research.google.com/drive/1uWmTdQJ_yqp1psutvNQEsxEvJgUFbS8E?usp=sharing" target="_blank">Customer Churn Insights & Prediction</a></li>
+                            <li><strong>Description:</strong> Collecting and preprocessing customer data in Python for analysis, using Pandas and SQL for data cleaning and exploratory data analysis (EDA).</li>
+                            <li><strong>Tools:</strong> Python, Pandas, SQL, Tableau</li>
+                            <li><strong>Key Achievements:</strong> Created an interactive Tableau dashboard for visualizing churn trends by demographics and subscription type.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2: Stock Portfolio Tracker -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Stock Portfolio Tracker</div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/portfolio.PNG' %}" alt="Data Science Scholar Image" class="img-fluid">
+                        </div>
+                        <ul>
+                            <li><strong>GitHub:</strong> <a href="https://github.com/Dipin-D/Stock-Portfolio-Tracker" target="_blank">Stock Portfolio Tracker</a></li>
+                            <li><strong>Description:</strong> Developing a Stock Portfolio Tracker using Python, Matplotlib, Pandas, and NumPy, with real-time stock price updates through API integration to enhance investment analysis and decision-making.</li>
+                            <li><strong>Tools:</strong> Python, Matplotlib, Pandas, NumPy, API Integration</li>
+                            <li><strong>Key Achievements:</strong> Created a Tableau dashboard to visualize portfolio performance, enabling users to make informed investment decisions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3: Snake Game (GitHub Link) -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Snake Game by Dipin</div>
+                    <div class="card-body">
+                        <ul>
+                            <li><strong>GitHub:</strong> <a href="https://github.com/Dipin-D/Snake-Game-by-Dipin" target="_blank">Snake Game</a></li>
+                            <li><strong>Description:</strong> I made a fun and interactive Snake game using OOP and Pygame, showcasing my programming and game development skills. The game features graphics, sound, and engaging gameplay.</li>
+                            <li><strong>Tools:</strong> Python, Pygame</li>
+                            <li><strong>Key Features:</strong> Object-Oriented Programming (OOP) principles, graphics, sound, and interactive gameplay.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Link Back Home -->
+            <div class="col-12 text-center">
+                <a href="/" class="btn btn-primary">Go Back to Home</a>
+            </div>            
+        </div>
+    </div>
+</section>
+{% endblock %}

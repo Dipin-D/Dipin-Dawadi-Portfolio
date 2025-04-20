@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main-content">
+    <div id="particles-js"></div>
+
+<nav>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#project">Project</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section id="about" class="animation-fade">
+    <div id="particles-js"></div>
+
+    <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+                {% load static %}
+                <img src="{% static 'image.JPG' %}" alt="Your Picture">
+            </div>
+            <div class="about-text">
+                <p>
+                    I am a driven and innovative professional specializing in computer science, wireless engineering, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape, making each project an opportunity for growth and discovery.
+                </p>
+                <p>
+                    Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <p>Below are some of the skills I have honed during my academic and professional journey:</p>
+        <div class="skills-grid">
+            <div class="skill-card"><p>Python & Django</p></div>
+            <div class="skill-card"><p>NumPy & Pandas</p></div>
+            <div class="skill-card"><p>Power BI & Data Analysis</p></div>
+            <div class="skill-card"><p>MS SQL Server</p></div>
+            <div class="skill-card"><p>Java & C++</p></div>
+            <div class="skill-card"><p>JavaScript & Web Design</p></div>
+            <div class="skill-card"><p>Machine Learning</p></div>
+            <div class="skill-card"><p>Google & Microsoft Suites</p></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Experience Section -->
+<section id="experience" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header"> Research Assistant (Web Dev & AI Focus)</div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/cms.PNG' %}" alt="Data Science Scholar Image" class="img-fluid">
+                        </div>
+                        <ul>
+                            <li><strong>Institution:</strong> Alabama Agricultural and Mechanical University</li>
+                            <li><strong>GitHub:</strong> <a href="https://github.com/Dipin-D/SMRT-CMS" target="_blank">SMRT CMS</a></li>
+                            <li><strong>Duration:</strong> Aug 2024 - Present</li>
+                            <li><strong>Location:</strong> Hybrid</li>
+                            <li><strong>Description:</strong> As a Research Assistant with a focus on Web Development and Artificial Intelligence, I have undertaken several key initiatives:
+
+                                CMS Enhancement: I researched and implemented innovative solutions to enhance the functionality of a Content Management System (CMS) tailored for a Computer Science class on campus. This development utilized Python, HTML/CSS, and JavaScript, with SQLite for database management and Plotly for advanced analytics.
+                                
+                                Platform Testing and Launch: I developed comprehensive test plans for the platform, which is scheduled to host and launch in March 2025. Currently, the platform is being tested with a Computer Science class, with plans to integrate OpenAI’s API to provide personalized performance recommendations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'experiences' %}" class="btn btn-primary">View Full Experience</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="project" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Customer Churn Insights & Prediction</div>
+                    <div class="card-body">
+                        <div class="card-image">
+                            <img src="{% static 'images/customer.PNG' %}" alt="Data Science Scholar Image" class="img-fluid">
+                        </div>
+                        <ul>
+                            <li><strong>Duration:</strong> Jan 2025 – Present</li>
+                            <li><strong>Google Colab:</strong> <a href="https://colab.research.google.com/drive/1uWmTdQJ_yqp1psutvNQEsxEvJgUFbS8E?usp=sharing" target="_blank">Customer Churn Insights & Prediction</a></li>
+                            <li><strong>Description:</strong> Collecting and preprocessing customer data in Python for analysis, using Pandas and SQL for data cleaning and exploratory data analysis (EDA).</li>
+                            <li><strong>Tools:</strong> Python, Pandas, SQL, Tableau</li>
+                            <li><strong>Key Achievements:</strong> Created an interactive Tableau dashboard for visualizing churn trends by demographics and subscription type.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'projects' %}" class="btn btn-primary">View All Projects</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certifications Section -->
+<section id="certifications" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+            <div class="certification-card">
+                <a href="https://certificate.propelcenter.org/e11aee9d-e375-4d4e-9281-b260f049a3ba#acc.QOZcKaNJ" target="_blank" class="cert-link">
+                    <h3>Socially Just Coding: Develop in Swift Explorations Pt. 1</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://certificate.propelcenter.org/bb1543e2-6b61-49fe-a8c1-e402ce4130c7#acc.MN50j6JU" target="_blank" class="cert-link">
+                    <h3>How Does AI/ML Impact Culture?</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.hackerrank.com/certificates/iframe/3ff3457195a4" target="_blank" class="cert-link">
+                    <h3>Python Programming Language</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.linkedin.com/posts/dipin-dawadi_certificate-of-completion-activity-7062963649803423744-30ah" target="_blank" class="cert-link">
+                    <h3>Codepath- Cybersecurity 101</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.hackerrank.com/certificates/2a9105be80c1" target="_blank" class="cert-link">
+                    <h3>SQL (Intermediate) Certificate</h3>
+                </a>
+            </div>
+            <div class="certification-card">
+                <a href="https://www.credly.com/badges/4102e608-8a36-4e91-9776-768b3ccf490d/linked_in_profile" target="_blank" class="cert-link">
+                    <h3>SFEPD Mind Over Money Skills Financial Literacy Certification
+                    </h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="animation-fade">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <form class="contact-form" action="mailto:dipin.dawadi@bulldogs.aamu.edu" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</section>
+</div>
+{% endblock %}
