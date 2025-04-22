@@ -1,6 +1,5 @@
 /* Default styles (Desktop) */
 
-
 .animation-fade {
     animation: fadeIn 2s ease-in-out;
 }
@@ -92,21 +91,7 @@ h1 {
     left: 0;
     width: 100vw;  /* Full width of the viewport */
     height: 100vh; /* Full height of the viewport */
-    pointer-events: none;
-}
-.section-with-particles {
-    position: relative;
-    overflow: hidden;
-}
-
-.section-with-particles .particles-js {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 0;
-    pointer-events: none;
+    z-index: -1;
 }
 
 
@@ -210,7 +195,7 @@ p {
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #e2e5fa;
+    background-color: #758faa;
     line-height: 1.6;
     overflow-x: hidden; /* Prevent horizontal scroll */
 }

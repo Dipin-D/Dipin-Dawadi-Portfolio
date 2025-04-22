@@ -14,13 +14,46 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
-  <div id='topology'>
-    <header>
-        <h1>Dipin Dawadi</h1>
-        <p>My Journey, Achievements, and Skills</p>
-    </header>
+  <header style="position: relative; overflow: hidden;">
+    <!-- Left Robot -->
+    <model-viewer 
+      src="{% static 'robot.glb' %}"
+      alt="Left Robot"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      environment-image="neutral"
+      auto-rotate
+      camera-controls
+      autoplay  
+      animation-name="Flight"  
+      style="width: 100%; height: 100%; position: absolute; top: 0; left: -40%; z-index: -1;"
+    ></model-viewer>
+  
+    <!-- Right Robot (Duplicate) -->
+    <model-viewer 
+      src="{% static 'robot.glb' %}"
+      alt="Right Robot"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      environment-image="neutral"
+      auto-rotate
+      camera-controls
+      autoplay  
+      animation-name="Flight"  
+      style="width: 100%; height: 100%; position: absolute; top: 0; right: -40%; z-index: -1; transform: scaleX(-1);"
+    ></model-viewer>
+  
+    <!-- Centered Text (Unchanged) -->
+    <div class="header-content">
+      <h1>Dipin Dawadi</h1>
+      <p>My Journey, Achievements, and Skills</p>
+    </div>
+  </header>
+  <div id="particles-js"></div>
 
     <div class="content">
       
@@ -97,7 +130,7 @@
       }
     },
     "interactivity": {
-      "detect_on": "canvas",
+      "detect_on": "window",
       "events": {
         "onhover": { "enable": true, "mode": "repulse" },
         "onclick": { "enable": true, "mode": "push" },

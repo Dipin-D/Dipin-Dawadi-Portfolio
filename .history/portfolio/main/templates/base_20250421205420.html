@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dipin Dawadi{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Main CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Add this new style */
+        #robotCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+  <header style="position: relative; height: 100vh; overflow: hidden;">
+    <!-- Three.js Canvas (Replaces model-viewer) -->
+    <canvas id="robotCanvas"></canvas>
+    
+    <!-- Centered Text (Unchanged) -->
+    <div class="header-content">
+      <h1>Dipin Dawadi</h1>
+      <p>My Journey, Achievements, and Skills</p>
+    </div>
+  </header>
+
+  <div id='topology'>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+      <a href="https://www.linkedin.com/in/dipin-dawadi/" target="_blank">
+         LinkedIn <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Dipin-D/Dipin-Portfolio" target="_blank">
+          Github <i class="fab fa-github"></i>
+      </a>
+    </footer>
+  </div>
+
+  <!-- Three.js Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+  
+  <!-- Your existing Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Interactive Robots
+    const canvas = document.getElementById('robotCanvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Lighting
+    const light = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(light);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+
+    // Load robots
+    const loader = new THREE.GLTFLoader();
+    let leftRobot, rightRobot;
+    
+    // Left Robot
+    loader.load(
+        "{% static 'robot.glb' %}",
+        (gltf) => {
+            leftRobot = gltf.scene;
+            leftRobot.position.set(-2, -1, 0); // Left position
+            leftRobot.scale.set(0.8, 0.8, 0.8);
+            scene.add(leftRobot);
+            
+            // Set up animations if available
+            if (gltf.animations?.length > 0) {
+                const mixer = new THREE.AnimationMixer(leftRobot);
+                mixer.clipAction(gltf.animations[0]).play();
+                
+                // Animation loop
+                const clock = new THREE.Clock();
+                function animate() {
+                    requestAnimationFrame(animate);
+                    mixer.update(clock.getDelta());
+                    renderer.render(scene, camera);
+                }
+                animate();
+            }
+        }
+    );
+
+    // Right Robot (Mirrored)
+    loader.load(
+        "{% static 'robot.glb' %}",
+        (gltf) => {
+            rightRobot = gltf.scene;
+            rightRobot.position.set(2, -1, 0); // Right position
+            rightRobot.scale.set(0.8, 0.8, 0.8);
+            rightRobot.rotation.y = Math.PI; // Face opposite direction
+            scene.add(rightRobot);
+        }
+    );
+
+    // Cursor interaction
+    const cursor = { x: 0, y: 0 };
+    window.addEventListener('mousemove', (event) => {
+        cursor.x = (event.clientX / window.innerWidth) * 2 - 1;
+        cursor.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+        if (leftRobot) {
+            leftRobot.rotation.y = -2 + (cursor.x * 1.5);
+            leftRobot.rotation.x = cursor.y * 0.5;
+        }
+        if (rightRobot) {
+            rightRobot.rotation.y = Math.PI + (cursor.x * 1.5);
+            rightRobot.rotation.x = cursor.y * 0.5;
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Your existing Particles.js Configuration
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+        "move": { "enable": true, "speed": 6 }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" },
+          "resize": true
+        },
+        "modes": {
+          "repulse": { "distance": 100, "duration": 0.4 },
+          "push": { "particles_nb": 4 }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+</html>
