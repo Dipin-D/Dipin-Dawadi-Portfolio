@@ -72,9 +72,7 @@ p {
       0 0 8px rgba(0, 123, 255, 0.3),
       0 0 12px rgba(0, 123, 255, 0.2);
 }
-#about .section-title {
-    margin: 0;
-}
+
 .section-title::after {
     content: '';
     width: 70px;

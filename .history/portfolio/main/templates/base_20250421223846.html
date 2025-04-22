@@ -19,6 +19,19 @@
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
+    <!-- Left Robot -->
+    <model-viewer 
+      src="{% static 'robot.glb' %}"
+      alt="Left Robot"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      environment-image="neutral"
+      auto-rotate
+      camera-controls
+      autoplay  
+      animation-name="Flight"  
+      class="robot-left"
+    ></model-viewer>
   
     <!-- Centered Text -->
     <div class="header-content">

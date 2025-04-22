@@ -1,4 +1,3 @@
-
 /* ===== Base Styles ===== */
 * {
     margin: 0;
@@ -30,18 +29,22 @@ body {
     z-index: -1;
 }
 
-/* ===== Robot Fix ===== */ 
-.robot-center {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
+/* ===== Robot Images ===== */
+.robot-left, .robot-right {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: -1;
   }
   
-  @media (max-width: 768px) {
-    .robot-center {
-      width: 100px;
-      height: 100px;
-    }
+  .robot-left {
+    left: -38%;
+  }
+  
+  .robot-right {
+    right: -38%;
+    transform: scaleX(-1);
   }
 
 /* ===== Typography ===== */
@@ -72,9 +75,7 @@ p {
       0 0 8px rgba(0, 123, 255, 0.3),
       0 0 12px rgba(0, 123, 255, 0.2);
 }
-#about .section-title {
-    margin: 0;
-}
+
 .section-title::after {
     content: '';
     width: 70px;
@@ -172,7 +173,7 @@ nav ul li a:hover {
 
 /* ===== Content Sections ===== */
 section {
-    padding: 20px 10px;
+    padding: 40px 20px;
 }
 
 .container {
@@ -217,6 +218,7 @@ section {
 
 .card-body ul li {
     margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
 .card-body .card-image {
@@ -236,42 +238,41 @@ section {
 }
 
 /* ===== About Section ===== */
-
-
 .about-content {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
 .about-image {
-    max-width: 150px;
+    flex: 1;
+    max-width: 300px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 .about-image img {
     width: 100%;
     height: auto;
+    border-radius: 15px;
     object-fit: cover;
 }
 
 .about-text {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
     flex: 2;
+    line-height: 1.8;
 }
 
 
 #about img {
+    width: 300px;
+    height: 400px;
     object-fit: cover;
+    border-radius: 15px;
     display: block;
+    margin: 20px auto;
     object-position: top center;
 }
 
@@ -300,11 +301,13 @@ section {
 /* ===== Flip Book/Portfolio ===== */
 .flip-book {
     display: flex;
-    gap: 5px;
+    gap: 15px;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
+    margin: 20px auto;
+    padding: 10px;
 }
 
 .page {
@@ -339,21 +342,26 @@ section {
 /* ===== Certifications ===== */
 .certifications-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding-top: 1rem;
 }
 
 .certification-card {
+    background: #2c3e50;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding: 20px;
-    color: #fff;
-    background-color: #1e2a37;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.certification-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
 
 .certification-card:hover {
     transform: translateY(-5px);
@@ -445,7 +453,7 @@ section {
 @media (max-width: 768px) {
     /* Hide right robot on small screens */
     .robot-right {
-        display: none;    }
+        display: block;    }
     
     /* Header adjustments */
     header h1 {
@@ -487,9 +495,6 @@ section {
     
     /* Skills grid adjustments */
     .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .certifications-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
@@ -555,9 +560,6 @@ section {
     
     /* Skills grid adjustments */
     .skills-grid {
-        grid-template-columns: 1fr;
-    }
-    .certifications-grid {
         grid-template-columns: 1fr;
     }
     

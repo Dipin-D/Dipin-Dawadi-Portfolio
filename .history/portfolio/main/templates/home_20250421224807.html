@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
 
 
 <!-- Hamburger icon -->
@@ -24,42 +23,42 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-
-        <h2 class="section-title">About Me
-            <model-viewer 
-            src="{% static 'robot.glb' %}"
-            alt="Robot"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            environment-image="neutral"
-            auto-rotate
-            camera-controls
-            autoplay  
-            animation-name="Flight"  
-            class="robot-center"
-          ></model-viewer>
-        </h2>
-
-        <div class="about-content">
-            <div class="about-image">
-                <div class="flip-book">
-                <div class="page">
-                <img src="{% static 'image.JPG' %}" alt="Your Picture">
-                </div>
-            </div>
-            </div>
-
-            <div class="about-text">
-                <p>
-                    I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
-                </p>
-                <p>
-                    Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
-                </p>
-            </div>
+  <h2 class="section-title">About Me</h2>
+  <div class="about-content">
+    <div class="about-image">
+      <div class="flip-book">
+        <div class="page">
+          {% load static %}
+          <img src="{% static 'image.JPG' %}" alt="Your Picture">
         </div>
+      </div>
     </div>
+    <div class="about-text">
+      <p>
+        I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
+      </p>
+      <p>
+        Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
+      </p>
+    </div>
+  </div>
+
+  <!-- Robot Below About Me -->
+  <div class="robot-below">
+    <model-viewer 
+      src="{% static 'robot.glb' %}"
+      alt="About Me Robot"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      environment-image="neutral"
+      auto-rotate
+      camera-controls
+      autoplay  
+      animation-name="Flight"  
+    ></model-viewer>
+  </div>
 </section>
+
 <!-- Skills Section -->
 <section id="skills" class="animation-fade">
     <div class="container">
@@ -168,33 +167,33 @@
         <div class="certifications-grid">
             <div class="certification-card">
                 <a href="https://certificate.propelcenter.org/e11aee9d-e375-4d4e-9281-b260f049a3ba#acc.QOZcKaNJ" target="_blank" class="cert-link">
-                    <p>Socially Just Coding: Develop in Swift Explorations Pt. 1</p>
+                    <h3>Socially Just Coding: Develop in Swift Explorations Pt. 1</h3>
                 </a>
             </div>
             <div class="certification-card">
                 <a href="https://certificate.propelcenter.org/bb1543e2-6b61-49fe-a8c1-e402ce4130c7#acc.MN50j6JU" target="_blank" class="cert-link">
-                    <p>How Does AI/ML Impact Culture?</p>
+                    <h3>How Does AI/ML Impact Culture?</h3>
                 </a>
             </div>
             <div class="certification-card">
                 <a href="https://www.hackerrank.com/certificates/iframe/3ff3457195a4" target="_blank" class="cert-link">
-                    <p>Python Programming Language</p>
+                    <h3>Python Programming Language</h3>
                 </a>
             </div>
             <div class="certification-card">
                 <a href="https://www.linkedin.com/posts/dipin-dawadi_certificate-of-completion-activity-7062963649803423744-30ah" target="_blank" class="cert-link">
-                    <p>Codepath- Cybersecurity 101</p>
+                    <h3>Codepath- Cybersecurity 101</h3>
                 </a>
             </div>
             <div class="certification-card">
                 <a href="https://www.hackerrank.com/certificates/2a9105be80c1" target="_blank" class="cert-link">
-                    <p>SQL (Intermediate) Certificate</p>
+                    <h3>SQL (Intermediate) Certificate</h3>
                 </a>
             </div>
             <div class="certification-card">
                 <a href="https://www.credly.com/badges/4102e608-8a36-4e91-9776-768b3ccf490d/linked_in_profile" target="_blank" class="cert-link">
-                    <p>SFEPD Mind Over Money Skills Financial Literacy Certification
-                    </p>
+                    <h3>SFEPD Mind Over Money Skills Financial Literacy Certification
+                    </h3>
                 </a>
             </div>
         </div>
