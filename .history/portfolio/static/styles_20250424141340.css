@@ -238,7 +238,7 @@ section {
 }
 
 .about-image {
-    max-width: 200px;
+    max-width: 150px;
     text-align: center;
 }
 
@@ -307,8 +307,8 @@ section {
 }
 
 .page img {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 250px;
+    max-height: 250px;
     object-fit: contain;
     display: block;
     border-radius: 15px;
