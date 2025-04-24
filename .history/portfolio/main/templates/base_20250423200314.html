@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -28,7 +30,73 @@
   <div id="particles-js"></div>
 
     <div class="content">
-      
+      <script type="module">
+        import * as THREE from 'https://cdn.skypack.dev/three@0.142.0';
+        import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.142.0/examples/jsm/loaders/GLTFLoader.js';
+        
+        let scene, camera, renderer, robot, clock;
+        const container = document.getElementById('robot-container');
+        
+        function init() {
+            scene = new THREE.Scene();
+        
+            // Setup camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
+            camera.position.z = 5;
+        
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, 400);
+            container.appendChild(renderer.domElement);
+        
+            // Light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(ambientLight);
+        
+            // Load robot
+            const loader = new GLTFLoader();
+            loader.load("{% static 'robot.glb' %}", gltf => {
+                robot = gltf.scene;
+                robot.scale.set(1.5, 1.5, 1.5);
+                scene.add(robot);
+            });
+        
+            clock = new THREE.Clock();
+        
+            animate();
+        }
+        
+        // Scroll animation
+        window.addEventListener('scroll', () => {
+            if (robot) {
+                const scrollY = window.scrollY || window.pageYOffset;
+                robot.position.y = -scrollY * 0.005;
+                robot.rotation.y = scrollY * 0.002;
+            }
+        });
+        
+        // Animate
+        function animate() {
+            requestAnimationFrame(animate);
+        
+            const delta = clock.getDelta();
+            if (robot) {
+                robot.rotation.x += 0.01;
+            }
+        
+            renderer.render(scene, camera);
+        }
+        
+        // Handle resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / 400;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, 400);
+        });
+        
+        init();
+        </script>
+        
         {% block content %}{% endblock %}
     </div>
 
@@ -80,7 +148,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +161,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,

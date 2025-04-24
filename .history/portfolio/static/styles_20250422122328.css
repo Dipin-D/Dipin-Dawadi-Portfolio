@@ -30,6 +30,19 @@ body {
     z-index: -1;
 }
 
+/* ===== Robot Fix ===== */ 
+.robot-center {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 768px) {
+    .robot-center {
+      width: 100px;
+      height: 100px;
+    }
+  }
 
 /* ===== Typography ===== */
 h1 {
@@ -124,8 +137,8 @@ header p {
     display: none; 
     justify-content: center;
     align-items: center;
-    gap: 3rem;
-    padding: 1.5rem 2rem;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
     z-index: 100;
 }
   
@@ -159,7 +172,7 @@ nav ul li a:hover {
 
 /* ===== Content Sections ===== */
 section {
-    padding: 30px 20px;
+    padding: 20px 10px;
 }
 
 .container {
@@ -169,7 +182,6 @@ section {
 
 /* ===== Card Styles ===== */
 .card {
-    background-color: #1e2a37;
     border: 2px solid #091019; 
     margin: 15px 0;
     width: 100%;

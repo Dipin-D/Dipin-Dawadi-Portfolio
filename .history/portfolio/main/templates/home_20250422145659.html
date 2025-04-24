@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Hamburger icon -->
+<div class="menu-toggle">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <ul class="navbar-list">
+        <li class="navbar-item"><a href="#about">About</a></li>
+        <li class="navbar-item"><a href="#skills">Skills</a></li>
+        <li class="navbar-item"><a href="#experience">Experience</a></li>
+        <li class="navbar-item"><a href="#project">Project</a></li>
+        <li class="navbar-item"><a href="#certifications">Certifications</a></li>
+        <li class="navbar-item"><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="main-content">
+    <section id="about" class="animation-fade">
+        <h2 class="section-title">About Me
+            <div id="robot-container" class="robot-center"></div>
+        </h2>
+
+        <div class="about-content">
+            <div class="about-image">
+                <div class="flip-book">
+                    <div class="page">
+                        <img src="{% static 'image.JPG' %}" alt="Your Picture">
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-text">
+                <p>
+                    I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
+                </p>
+                <p>
+                    Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other sections remain the same -->
+    <!-- Skills Section -->
+    <section id="skills" class="animation-fade">
+        <!-- ... existing skills content ... -->
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="animation-fade">
+        <!-- ... existing experience content ... -->
+    </section>
+
+    <!-- Projects Section -->
+    <section id="project" class="animation-fade">
+        <!-- ... existing projects content ... -->
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="animation-fade">
+        <!-- ... existing certifications content ... -->
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="animation-fade">
+        <!-- ... existing contact content ... -->
+    </section>
+</div>
+
+<!-- Three.js and related libraries -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/TransformControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three-pathfinding@0.12.0/build/three-pathfinding.min.js"></script>
+
+<!-- GSAP CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+    // Navbar toggle functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar');
+    const navItems = document.querySelectorAll('.navbar-item');
+    
+    let navOpen = false;
+    
+    menuToggle.addEventListener('click', () => {
+        navOpen = !navOpen;
+    
+        if (navOpen) {
+            navbar.classList.add('open');
+    
+            gsap.fromTo(navItems,
+                { opacity: 0, y: -30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.1,
+                    duration: 0.5,
+                    ease: 'expo.out'
+                }
+            );
+        } else {
+            gsap.to(navItems, {
+                opacity: 0,
+                y: -30,
+                duration: 0.3,
+                stagger: -0.1,
+                ease: 'expo.in',
+                onComplete: () => navbar.classList.remove('open')
+            });
+        }
+    });
+
+    // Three.js Scene Setup
+    const container = document.getElementById('robot-container');
+    let scene, camera, renderer, robot, transformControls;
+    let world, robotBody, timeStep = 1/60;
+    let pathfinding, zone, graph;
+    let navMesh;
+
+    init();
+    animate();
+
+    function init() {
+        // Scene setup
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xf0f0f0);
+        
+        // Camera
+        camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 5, 10);
+        camera.lookAt(0, 0, 0);
+        
+        // Renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Physics world
+        world = new CANNON.World();
+        world.gravity.set(0, -9.82, 0);
+        world.broadphase = new CANNON.NaiveBroadphase();
+        world.solver.iterations = 10;
+        
+        // Ground
+        const groundGeometry = new THREE.PlaneGeometry(20, 20);
+        const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x999999, side: THREE.DoubleSide });
+        const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+        groundMesh.rotation.x = -Math.PI / 2;
+        scene.add(groundMesh);
+        
+        const groundShape = new CANNON.Plane();
+        const groundBody = new CANNON.Body({ mass: 0 });
+        groundBody.addShape(groundShape);
+        groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+        world.addBody(groundBody);
+        
+        // Load robot model
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            "{% static 'robot.glb' %}",
+            function (gltf) {
+                robot = gltf.scene;
+                robot.scale.set(0.5, 0.5, 0.5);
+                robot.position.y = 1;
+                scene.add(robot);
+                
+                // Set up physics for robot
+                const robotShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+                robotBody = new CANNON.Body({ mass: 1 });
+                robotBody.addShape(robotShape);
+                robotBody.position.copy(robot.position);
+                world.addBody(robotBody);
+                
+                // Set up transform controls
+                transformControls = new THREE.TransformControls(camera, renderer.domElement);
+                transformControls.attach(robot);
+                scene.add(transformControls);
+                
+                transformControls.addEventListener('dragging-changed', function (event) {
+                    if (!event.value) {
+                        // Update physics body position when dragging ends
+                        robotBody.position.copy(robot.position);
+                    }
+                });
+                
+                // Initialize pathfinding
+                initPathfinding(gltf);
+            },
+            undefined,
+            function (error) {
+                console.error('Error loading robot model:', error);
+            }
+        );
+        
+        // Add some obstacles
+        addObstacles();
+        
+        // Event listeners
+        window.addEventListener('resize', onWindowResize);
+        container.addEventListener('click', onClick);
+    }
+    
+    function initPathfinding(gltf) {
+        pathfinding = new Pathfinding();
+        
+        // In a real scenario, you would load a proper navigation mesh
+        // For this example, we'll create a simple grid zone
+        zone = 'level';
+        
+        // Create a simple grid for pathfinding
+        const gridSize = 20;
+        const gridDivision = 10;
+        const grid = new PF.Grid(gridSize, gridSize);
+        
+        // Mark some cells as unwalkable (obstacles)
+        // This should match your actual obstacle positions
+        grid.setWalkableAt(5, 5, false);
+        grid.setWalkableAt(6, 5, false);
+        grid.setWalkableAt(7, 5, false);
+        
+        // Convert to three-pathfinding format
+        graph = pathfinding.createZone(gridSize, gridSize, gridDivision, gridDivision);
+        pathfinding.setZoneData(zone, graph);
+    }
+    
+    function addObstacles() {
+        // Add some boxes as obstacles
+        const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        
+        for (let i = 0; i < 3; i++) {
+            const box = new THREE.Mesh(boxGeometry, boxMaterial);
+            box.position.set(5 + i, 0.5, 5);
+            scene.add(box);
+            
+            // Physics for obstacle
+            const boxShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+            const boxBody = new CANNON.Body({ mass: 0 }); // Static body
+            boxBody.addShape(boxShape);
+            boxBody.position.copy(box.position);
+            world.addBody(boxBody);
+        }
+    }
+    
+    function onClick(event) {
+        if (!robot) return;
+        
+        // Calculate mouse position in normalized device coordinates
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+        // Raycast to find click position
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, camera);
+        
+        const intersects = raycaster.intersectObjects(scene.children);
+        if (intersects.length > 0) {
+            const target = intersects[0].point;
+            
+            // Find path to target
+            const groupID = pathfinding.getGroup(zone, robot.position);
+            const closestNode = pathfinding.getClosestNode(robot.position, zone, groupID);
+            const targetNode = pathfinding.getClosestNode(target, zone, groupID);
+            
+            const path = pathfinding.findPath(closestNode.centroid, targetNode.centroid, zone, groupID);
+            
+            if (path && path.length) {
+                // Move robot along path
+                moveRobotAlongPath(path);
+            }
+        }
+    }
+    
+    function moveRobotAlongPath(path) {
+        // Simple movement - in a real scenario you'd implement proper path following
+        if (path.length > 0) {
+            const targetPos = new THREE.Vector3(path[0].x, robot.position.y, path[0].z);
+            
+            const direction = new THREE.Vector3()
+                .subVectors(targetPos, robot.position)
+                .normalize();
+            
+            // Apply force to physics body
+            robotBody.velocity.set(direction.x * 2, 0, direction.z * 2);
+            
+            // Rotate robot to face direction
+            robot.lookAt(targetPos);
+        }
+    }
+    
+    function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+    
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Update physics
+        world.step(timeStep);
+        
+        // Sync Three.js objects with physics
+        if (robot && robotBody) {
+            robot.position.copy(robotBody.position);
+            robot.quaternion.copy(robotBody.quaternion);
+        }
+        
+        renderer.render(scene, camera);
+    }
+</script>
+
+{% endblock %}

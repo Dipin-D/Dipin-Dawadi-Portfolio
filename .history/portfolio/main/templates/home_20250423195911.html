@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-
+<script>.floating-robot {
+    position: fixed;
+    top: 30vh;
+    left: 40vw;
+    width: 300px;
+    height: auto;
+    z-index: 999;
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+  }
+  </script>
 
 <!-- Hamburger icon -->
 <div class="menu-toggle">
@@ -24,8 +34,24 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
+
         <h2 class="section-title">About Me
+            <model-viewer 
+            id="flying-robot"
+            src="{% static 'robot.glb' %}"
+            alt="Flying Robot"
+            ar
+            environment-image="neutral"
+            auto-rotate
+            camera-controls
+            autoplay  
+            animation-name="Flight"
+            class="floating-robot"
+          ></model-viewer>
+          
+        
         </h2>
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +62,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>
@@ -248,7 +271,64 @@
         }
       });
     </script>
-    
+    <script>
+        const robot = document.getElementById('scroll-robot');
+      
+        // Store initial position
+        let lastScrollY = window.scrollY;
+      
+        // Add event listener
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+      
+          // Make it move in both X and Y (floating/flying effect)
+          const translateX = scrollY * 0.2; // Moves right a bit
+          const translateY = scrollY * 0.1; // Moves down a bit
+      
+          robot.style.transform = `translate(${translateX}px, ${translateY}px) rotateY(${scrollY * 0.1}deg)`;
+          
+          // Optional: smooth transition
+          robot.style.transition = 'transform 0.1s ease-out';
+        });
+      </script>
+      
+      <script>
+        const robot = document.getElementById('flying-robot');
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+      
+        // Track mouse position relative to center
+        document.addEventListener('mousemove', (e) => {
+          const centerX = window.innerWidth / 2;
+          const centerY = window.innerHeight / 2;
+          mouseX = (e.clientX - centerX) * 0.1;
+          mouseY = (e.clientY - centerY) * 0.1;
+        });
+      
+        // Track scroll position
+        window.addEventListener('scroll', () => {
+          targetY = window.scrollY * 0.3;
+        });
+      
+        // Animation loop
+        function animate() {
+          // Smooth follow
+          const currentX = parseFloat(robot.style.getPropertyValue('--x') || 0);
+          const currentY = parseFloat(robot.style.getPropertyValue('--y') || 0);
+          
+          const newX = currentX + (mouseX - currentX) * 0.05;
+          const newY = currentY + (targetY + mouseY - currentY) * 0.05;
+      
+          robot.style.transform = `translate(${newX}px, ${newY}px)`;
+          robot.style.setProperty('--x', newX);
+          robot.style.setProperty('--y', newY);
+      
+          requestAnimationFrame(animate);
+        }
+      
+        animate();
+      </script>
+      
 </script>
 
 {% endblock %}

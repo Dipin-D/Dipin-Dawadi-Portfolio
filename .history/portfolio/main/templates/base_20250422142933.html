@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -80,7 +82,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +95,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -116,6 +118,84 @@
     "retina_detect": true
   });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const robot = document.querySelector('model-viewer');
+      
+      if (robot) {
+          // Store original position
+          const originalPosition = '0 0 0';
+          
+          // Animation variables
+          let targetX = 0;
+          let targetY = 0;
+          let currentX = 0;
+          let currentY = 0;
+          let animationFrameId = null;
+          
+          // Movement constraints (in meters)
+          const maxMovement = 0.5;
+          const movementSpeed = 0.05;
+          
+          // Smooth movement function
+          function smoothMove() {
+              // Apply easing to the movement
+              currentX += (targetX - currentX) * movementSpeed;
+              currentY += (targetY - currentY) * movementSpeed;
+              
+              // Apply the translation to the robot
+              robot.setAttribute('position', `${currentX} ${currentY} 0`);
+              
+              // Continue the animation
+              animationFrameId = requestAnimationFrame(smoothMove);
+          }
+          
+          // Start the smooth movement animation
+          smoothMove();
+          
+          // Add mousemove event listener
+          document.addEventListener('mousemove', function(e) {
+              // Calculate cursor position relative to viewport (0 to 1)
+              const x = (e.clientX / window.innerWidth) * 2 - 1; // -1 to 1
+              const y = -((e.clientY / window.innerHeight) * 2 - 1); // -1 to 1
+              
+              // Calculate target position (scaled by maxMovement)
+              targetX = x * maxMovement;
+              targetY = y * maxMovement;
+              
+              // Add subtle rotation based on movement direction
+              const rotateY = x * 15; // -15 to +15 degrees
+              const rotateX = y * 10; // -10 to +10 degrees
+              robot.setAttribute('rotation', `${rotateX} ${rotateY} 0`);
+          });
+          
+          // Reset position when mouse leaves
+          document.addEventListener('mouseout', function() {
+              targetX = 0;
+              targetY = 0;
+              robot.setAttribute('rotation', '0 0 0');
+          });
+          
+          // Add click effect
+          robot.addEventListener('click', function() {
+              // Quick "bounce" effect
+              robot.setAttribute('scale', '1.1 1.1 1.1');
+              setTimeout(() => {
+                  robot.setAttribute('scale', '0.9 0.9 0.9');
+                  setTimeout(() => {
+                      robot.setAttribute('scale', '1 1 1');
+                  }, 100);
+              }, 100);
+          });
+          
+          // Clean up on page leave
+          window.addEventListener('beforeunload', function() {
+              if (animationFrameId) {
+                  cancelAnimationFrame(animationFrameId);
+              }
+          });
+      }
+  });
+</script>
 </body>
 </html>

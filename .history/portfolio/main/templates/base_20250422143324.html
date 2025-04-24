@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -80,7 +82,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +95,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -116,6 +118,82 @@
     "retina_detect": true
   });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const robot = document.querySelector('model-viewer');
+      
+      if (!robot) {
+          console.error("Robot model-viewer element not found!");
+          return;
+      }
+  
+      // Wait for the model to be fully loaded
+      robot.addEventListener('load', function() {
+          // Initialize variables
+          let currentX = 0;
+          let currentY = 0;
+          let targetX = 0;
+          let targetY = 0;
+          
+          // Movement settings (adjust these as needed)
+          const movementRange = 0.3;
+          const followSpeed = 0.05;
+          
+          // Safe position update function
+          function updatePosition() {
+              // Smooth movement
+              currentX += (targetX - currentX) * followSpeed;
+              currentY += (targetY - currentY) * followSpeed;
+              
+              // Try both methods of setting position with fallbacks
+              try {
+                  // Method 1: Using the model-viewer API
+                  robot.position = `${currentX}m ${currentY}m 0m`;
+                  
+                  // Method 2: Using attributes as fallback
+                  robot.setAttribute('position', `${currentX} ${currentY} 0`);
+                  
+                  // Method 3: If model is available (with extra checks)
+                  if (robot.model && typeof robot.model.position?.set === 'function') {
+                      robot.model.position.set(currentX, currentY, 0);
+                  }
+              } catch (e) {
+                  console.warn("Position update error:", e);
+              }
+              
+              requestAnimationFrame(updatePosition);
+          }
+          
+          // Start animation
+          updatePosition();
+          
+          // Mouse movement handler
+          document.addEventListener('mousemove', function(e) {
+              // Calculate normalized mouse position (-1 to 1)
+              targetX = ((e.clientX / window.innerWidth) * 2 - 1) * movementRange;
+              targetY = -((e.clientY / window.innerHeight) * 2 - 1) * movementRange;
+              
+              // Add head tilt effect
+              const tiltY = targetX * 30; // Horizontal tilt
+              const tiltX = targetY * 15; // Vertical tilt
+              robot.setAttribute('rotation', `${tiltX} ${tiltY} 0`);
+          });
+          
+          // Click effect
+          robot.addEventListener('click', function() {
+              robot.setAttribute('scale', '1.15 1.15 1.15');
+              setTimeout(() => robot.setAttribute('scale', '1 1 1'), 150);
+          });
+          
+      }).catch(error => {
+          console.error("Model loading error:", error);
+      });
+      
+      // Error handling for model loading
+      robot.addEventListener('error', function(event) {
+          console.error("3D model failed to load:", event.detail);
+      });
+  });
+  </script>
 </body>
 </html>

@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -80,7 +82,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +95,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -116,6 +118,77 @@
     "retina_detect": true
   });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const robot = document.querySelector('model-viewer');
+      
+      if (robot) {
+          // First ensure the model is loaded
+          robot.addEventListener('load', function() {
+              // Disable auto features that might interfere
+              robot.removeAttribute('auto-rotate');
+              robot.removeAttribute('camera-controls');
+              
+              // Initialize position variables
+              let currentX = 0;
+              let currentY = 0;
+              let targetX = 0;
+              let targetY = 0;
+              
+              // Movement parameters (adjust these as needed)
+              const movementRange = 0.5; // How far robot can move (in meters)
+              const followSpeed = 0.08; // How quickly it follows
+              
+              // Animation loop
+              function updatePosition() {
+                  // Smooth movement
+                  currentX += (targetX - currentX) * followSpeed;
+                  currentY += (targetY - currentY) * followSpeed;
+                  
+                  // Apply movement - using both attribute and direct property
+                  robot.setAttribute('position', `${currentX} ${currentY} 0`);
+                  
+                  // For some model-viewer versions, we need to set directly
+                  if (robot.model) {
+                      robot.model.position.set(currentX, currentY, 0);
+                  }
+                  
+                  // Continue animation
+                  requestAnimationFrame(updatePosition);
+              }
+              
+              // Start animation
+              updatePosition();
+              
+              // Track mouse movement
+              document.addEventListener('mousemove', function(e) {
+                  // Convert mouse position to -1 to 1 range
+                  const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                  const mouseY = -((e.clientY / window.innerHeight) * 2 - 1);
+                  
+                  // Calculate target position
+                  targetX = mouseX * movementRange;
+                  targetY = mouseY * movementRange;
+                  
+                  // Add head tilt effect
+                  const tiltY = mouseX * 20; // -20 to 20 degrees
+                  const tiltX = mouseY * 10; // -10 to 10 degrees
+                  robot.setAttribute('rotation', `${tiltX} ${tiltY} 0`);
+              });
+              
+              // Click effect
+              robot.addEventListener('click', function() {
+                  // Bounce animation
+                  robot.setAttribute('scale', '1.2 1.2 1.2');
+                  setTimeout(function() {
+                      robot.setAttribute('scale', '1 1 1');
+                  }, 200);
+              });
+          });
+      } else {
+          console.error("Robot model-viewer element not found!");
+      }
+  });
+  </script>
 </body>
 </html>

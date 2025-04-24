@@ -24,8 +24,22 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
+
         <h2 class="section-title">About Me
+            <model-viewer 
+            src="{% static 'robot.glb' %}"
+            alt="Robot"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            environment-image="neutral"
+            auto-rotate
+            camera-controls
+            autoplay  
+            animation-name="Flight"  
+            class="robot-center"
+          ></model-viewer>
         </h2>
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +50,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>

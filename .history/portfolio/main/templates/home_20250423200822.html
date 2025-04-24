@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+
 {% block content %}
 {% load static %}
 
 
+    
 <!-- Hamburger icon -->
 <div class="menu-toggle">
     <div class="bar"></div>
@@ -24,8 +26,10 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-        <h2 class="section-title">About Me
-        </h2>
+
+    <div id="robot-container"></div>
+
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +40,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>
@@ -247,6 +248,75 @@
           });
         }
       });
+    </script>
+    <script>
+        let scene, camera, renderer, robot, clock;
+        const container = document.getElementById('robot-container');
+    
+        // Initialize the scene
+        function init() {
+            scene = new THREE.Scene();
+    
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
+            camera.position.z = 5;
+    
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, 400);
+            container.appendChild(renderer.domElement);
+    
+            // Ambient light for better visibility
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(ambientLight);
+    
+            // Load the robot model
+            const loader = new THREE.GLTFLoader();
+            loader.load("{% static 'robot.glb' %}", function (gltf) {
+                robot = gltf.scene;
+                robot.scale.set(1.5, 1.5, 1.5); // Adjust the scale of the robot
+                scene.add(robot);
+            });
+    
+            clock = new THREE.Clock();
+            animate();
+        }
+    
+        // Scroll animation: Easing function to make the robot float smoothly
+        let scrollY = 0;
+        let targetY = 0;
+        let smoothness = 0.1; // Controls the smoothness of the scroll movement
+    
+        window.addEventListener('scroll', () => {
+            // Calculate the target Y position based on scroll position
+            targetY = window.scrollY || window.pageYOffset;
+        });
+    
+        function animate() {
+            requestAnimationFrame(animate);
+    
+            // Smoothly move the robot's vertical position
+            scrollY += (targetY - scrollY) * smoothness; // Ease the movement
+    
+            if (robot) {
+                robot.position.y = -scrollY * 0.005; // Make the robot float with scroll
+                robot.rotation.y = scrollY * 0.002; // Rotate the robot based on scroll
+            }
+    
+            // Rotate the robot for some dynamic effect
+            if (robot) {
+                robot.rotation.x += 0.01;
+            }
+    
+            renderer.render(scene, camera);
+        }
+    
+        // Handle window resizing for responsive rendering
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / 400;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, 400);
+        });
+    
+        init();
     </script>
     
 </script>

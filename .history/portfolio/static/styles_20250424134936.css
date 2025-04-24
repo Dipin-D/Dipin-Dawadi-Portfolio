@@ -124,8 +124,8 @@ header p {
     display: none; 
     justify-content: center;
     align-items: center;
-    gap: 3rem;
-    padding: 1.5rem 2rem;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
     z-index: 100;
 }
   
@@ -159,7 +159,7 @@ nav ul li a:hover {
 
 /* ===== Content Sections ===== */
 section {
-    padding: 30px 20px;
+    padding: 20px 10px;
 }
 
 .container {

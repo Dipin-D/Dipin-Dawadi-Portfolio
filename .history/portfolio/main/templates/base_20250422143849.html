@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -80,7 +82,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +95,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -116,6 +118,72 @@
     "retina_detect": true
   });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const robotViewer = document.querySelector('model-viewer.robot-center');
+      
+      if (!robotViewer) {
+          console.error("Robot model-viewer not found!");
+          return;
+      }
+  
+      // Variables for animation
+      let targetX = 0;
+      let targetY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      const movementRange = 0.5; // How far robot can move (in meters)
+      const followSpeed = 0.08; // How quickly it follows
+  
+      // Disable auto-rotate since we'll control movement
+      robotViewer.removeAttribute('auto-rotate');
+  
+      // Animation loop
+      function animate() {
+          // Smooth movement using linear interpolation
+          currentX += (targetX - currentX) * followSpeed;
+          currentY += (targetY - currentY) * followSpeed;
+          
+          // Apply the movement using model-viewer's camera-orbit
+          // This moves the "camera" around the robot to create movement illusion
+          robotViewer.cameraOrbit = `${currentX}rad ${currentY}rad 2m`;
+          
+          requestAnimationFrame(animate);
+      }
+  
+      // Start animation
+      animate();
+  
+      // Track mouse movement
+      document.addEventListener('mousemove', function(e) {
+          // Calculate cursor position (-1 to 1 range)
+          const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          const mouseY = -((e.clientY / window.innerHeight) * 2 - 1);
+          
+          // Calculate target position
+          targetX = mouseX * movementRange;
+          targetY = mouseY * movementRange * 0.5; // Reduce vertical movement
+          
+          // Add head tilt effect using rotation
+          robotViewer.orientation = `${mouseY * 15}deg ${mouseX * 30}deg 0deg`;
+      });
+  
+      // Reset when mouse leaves
+      document.addEventListener('mouseleave', function() {
+          targetX = 0;
+          targetY = 0;
+          robotViewer.orientation = '0deg 0deg 0deg';
+      });
+  
+      // Click effect
+      robotViewer.addEventListener('click', function() {
+          // Bounce animation using scale
+          robotViewer.setAttribute('scale', '1.1 1.1 1.1');
+          setTimeout(() => {
+              robotViewer.setAttribute('scale', '1 1 1');
+          }, 200);
+      });
+  });
+  </script>
 </body>
 </html>

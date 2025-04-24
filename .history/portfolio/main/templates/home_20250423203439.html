@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+
 {% block content %}
 {% load static %}
 
 
+    
 <!-- Hamburger icon -->
 <div class="menu-toggle">
     <div class="bar"></div>
@@ -24,8 +26,10 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-        <h2 class="section-title">About Me
-        </h2>
+
+    <div id="robot-container"></div>
+
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +40,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>
@@ -248,7 +249,212 @@
         }
       });
     </script>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuration
+            const config = {
+                scrollStartOffset: 0.2,  // Start animation after 20% scroll
+                scrollEndOffset: 0.8,    // Finish animation at 80% scroll
+                fadeDistance: 0.15,      // Fade in/out over 15% of scroll range
+                verticalRange: 1.5,      // Vertical movement range in world units
+                scaleRange: [0.8, 1.2],  // Min/max scale during animation
+                rotationIntensity: 0.1,  // Slight rotation effect during movement
+                mouseParallax: 0.003,   // Mouse movement parallax effect
+                easeFactor: 0.08         // Animation smoothing factor
+            };
+        
+            // Scene setup
+            const container = document.getElementById('robot-container');
+            const scene = new THREE.Scene();
+            
+            // Camera with dynamic FOV based on device
+            const camera = new THREE.PerspectiveCamera(
+                50, 
+                window.innerWidth / window.innerHeight, 
+                0.1, 
+                1000
+            );
+            camera.position.set(0, 0, 5);
+            
+            // Advanced renderer with better AA and performance
+            const renderer = new THREE.WebGLRenderer({
+                alpha: true,
+                antialias: true,
+                powerPreference: "high-performance"
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            container.appendChild(renderer.domElement);
+        
+            // Lighting setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight.position.set(1, 2, 3);
+            scene.add(directionalLight);
+            
+            const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
+            backLight.position.set(-1, -1, -1);
+            scene.add(backLight);
+        
+            // Fog for depth effect
+            scene.fog = new THREE.FogExp2(0x000000, 0.05);
+        
+            // Robot model and animation variables
+            let robot = null;
+            let mixer = null;  // Changed from const to let
+            const clock = new THREE.Clock();
+            
+            // Enhanced GLTF loader with progress and error handling
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+                "{% static 'robot.glb' %}",
+                (gltf) => {
+                    robot = gltf.scene;
+                    robot.scale.set(1.5, 1.5, 1.5);
+                    robot.position.y = -config.verticalRange;
+                    
+                    // Set initial transparency
+                    robot.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material.transparent = true;
+                            child.material.opacity = 0;
+                        }
+                    });
+                    
+                    scene.add(robot);
+                    
+                    // Animation mixer if model has animations
+                    if (gltf.animations && gltf.animations.length) {
+                        mixer = new THREE.AnimationMixer(robot);
+                        const action = mixer.clipAction(gltf.animations[0]);
+                        action.play();
+                    }
+                },
+                (xhr) => {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                (error) => {
+                    console.error('Error loading model:', error);
+                }
+            );
+        
+            // Scroll and visibility management
+            let scrollProgress = 0;
+            let targetScrollProgress = 0;
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            // Calculate animation range in pixels
+            const getScrollRange = () => {
+                const start = window.innerHeight * config.scrollStartOffset;
+                const end = document.body.scrollHeight - window.innerHeight * (1 - config.scrollEndOffset);
+                return { start, end, range: end - start };
+            };
+            
+            let scrollRange = getScrollRange();
+        
+            // Event listeners
+            const handleScroll = () => {
+                const { start, range } = scrollRange;
+                const scrollY = Math.max(0, window.scrollY - start);
+                targetScrollProgress = Math.min(1, Math.max(0, scrollY / range));
+            };
+        
+            const handleMouseMove = (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            };
+        
+            const handleResize = () => {
+                // Update camera
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                
+                // Update renderer
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // Recalculate scroll range
+                scrollRange = getScrollRange();
+            };
+        
+            window.addEventListener('scroll', handleScroll);
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('resize', handleResize);
+        
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                // Smooth scroll progress
+                scrollProgress += (targetScrollProgress - scrollProgress) * config.easeFactor;
+                
+                // Update model if loaded
+                if (robot) {
+                    // Calculate vertical position
+                    const verticalPos = THREE.MathUtils.lerp(
+                        -config.verticalRange,
+                        config.verticalRange,
+                        scrollProgress
+                    );
+                    
+                    // Calculate scale
+                    const scaleFactor = THREE.MathUtils.lerp(
+                        config.scaleRange[0],
+                        config.scaleRange[1],
+                        scrollProgress
+                    );
+                    
+                    // Calculate opacity (fade in/out)
+                    let opacity = 1;
+                    if (scrollProgress < config.fadeDistance) {
+                        opacity = scrollProgress / config.fadeDistance;
+                    } else if (scrollProgress > 1 - config.fadeDistance) {
+                        opacity = (1 - scrollProgress) / config.fadeDistance;
+                    }
+                    
+                    // Apply transformations
+                    robot.position.y = verticalPos;
+                    robot.scale.setScalar(scaleFactor * 1.5);
+                    
+                    // Slight rotation based on scroll progress
+                    robot.rotation.x = Math.sin(scrollProgress * Math.PI) * config.rotationIntensity;
+                    robot.rotation.y = Math.cos(scrollProgress * Math.PI) * config.rotationIntensity;
+                    
+                    // Mouse parallax effect
+                    robot.position.x = mouseX * config.mouseParallax;
+                    robot.position.z = 5 + mouseY * config.mouseParallax * 2;
+                    
+                    // Apply opacity to all materials
+                    robot.traverse((child) => {
+                        if (child.isMesh && child.material) {
+                            child.material.opacity = opacity;
+                        }
+                    });
+                }
+                
+                // Update animations if mixer exists
+                if (mixer) {
+                    mixer.update(clock.getDelta());
+                }
+                
+                // Render scene
+                renderer.render(scene, camera);
+            };
+        
+            animate();
+        
+            // Cleanup function
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('resize', handleResize);
+            };
+        });
+        </script>
 </script>
 
 {% endblock %}

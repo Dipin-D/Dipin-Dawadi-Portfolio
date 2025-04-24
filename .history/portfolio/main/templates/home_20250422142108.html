@@ -24,8 +24,22 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
+
         <h2 class="section-title">About Me
+            <model-viewer 
+            src="{% static 'robot.glb' %}"
+            alt="Robot"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            environment-image="neutral"
+            auto-rotate
+            camera-controls
+            autoplay  
+            animation-name="Flight"  
+            class="robot-center"
+          ></model-viewer>
         </h2>
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +50,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>
@@ -207,6 +218,33 @@
     </div>
 </section>
 
+<script>
+    // Make the robot interactive
+    document.addEventListener('DOMContentLoaded', function() {
+        const robot = document.querySelector('model-viewer');
+        
+        if (robot) {
+            // Add hover effect
+            robot.addEventListener('mouseenter', function() {
+                robot.setAttribute('animation-name', 'Wave');
+                robot.setAttribute('auto-rotate-delay', '3000');
+            });
+            
+            robot.addEventListener('mouseleave', function() {
+                robot.setAttribute('animation-name', 'Flight');
+                robot.setAttribute('auto-rotate-delay', '0');
+            });
+            
+            // Add click effect
+            robot.addEventListener('click', function() {
+                robot.setAttribute('animation-name', 'Dance');
+                setTimeout(() => {
+                    robot.setAttribute('animation-name', 'Flight');
+                }, 3000);
+            });
+        }
+    });
+</script>
 </div>
 <!-- GSAP CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

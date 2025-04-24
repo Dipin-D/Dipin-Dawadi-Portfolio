@@ -14,6 +14,8 @@
     <!-- Main CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Model Viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <header style="position: relative; overflow: hidden;">
@@ -80,7 +82,7 @@
         "anim": { "enable": false }
       },
       "size": {
-        "value": 1,
+        "value": 3,
         "random": true,
         "anim": { "enable": false }
       },
@@ -93,7 +95,7 @@
       },
       "move": {
         "enable": true,
-        "speed": 2,
+        "speed": 6,
         "direction": "none",
         "random": false,
         "straight": false,
@@ -116,6 +118,107 @@
     "retina_detect": true
   });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up Three.js scene
+    const container = document.querySelector('.robot-center');
+    if (!container) {
+        console.error("Robot container not found!");
+        return;
+    }
+
+    // Create scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.innerHTML = ''; // Clear existing content
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+
+    // Camera position
+    camera.position.z = 2;
+
+    // Variables for animation
+    let robot;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    const movementRange = 1;
+    const followSpeed = 0.05;
+
+    // Load the robot model
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+        '{% static "robot.glb" %}',
+        function(gltf) {
+            robot = gltf.scene;
+            scene.add(robot);
+            
+            // Scale the model if needed
+            robot.scale.set(0.5, 0.5, 0.5);
+        },
+        undefined,
+        function(error) {
+            console.error("Error loading model:", error);
+        }
+    );
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Smooth movement
+        currentX += (targetX - currentX) * followSpeed;
+        currentY += (targetY - currentY) * followSpeed;
+        
+        // Update robot position if loaded
+        if (robot) {
+            robot.position.x = currentX;
+            robot.position.y = currentY;
+            
+            // Add slight rotation based on movement
+            robot.rotation.y = currentX * 0.5;
+            robot.rotation.x = currentY * 0.3;
+        }
+        
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Mouse movement handler
+    document.addEventListener('mousemove', function(e) {
+        // Convert mouse position to -1 to 1 range
+        targetX = ((e.clientX / window.innerWidth) * 2 - 1) * movementRange;
+        targetY = -((e.clientY / window.innerHeight) * 2 - 1) * movementRange;
+    });
+
+    // Click effect
+    container.addEventListener('click', function() {
+        if (robot) {
+            // Bounce animation
+            robot.scale.set(1.1, 1.1, 1.1);
+            setTimeout(() => robot.scale.set(1, 1, 1), 200);
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+});
+</script>
 </body>
 </html>

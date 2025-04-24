@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+
 {% block content %}
 {% load static %}
 
 
+    
 <!-- Hamburger icon -->
 <div class="menu-toggle">
     <div class="bar"></div>
@@ -24,8 +26,10 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-        <h2 class="section-title">About Me
-        </h2>
+
+    <div id="robot-container"></div>
+
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,15 +40,12 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
                 <p>
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
-            </div>
             </div>
         </div>
     </div>
@@ -247,6 +248,95 @@
           });
         }
       });
+    </script>
+    <script>
+        let scene, camera, renderer, robot, clock;
+        const container = document.getElementById('robot-container');
+    
+        // Initialize the scene, camera, and renderer
+        function init() {
+            scene = new THREE.Scene();
+            
+            // Camera setup: Wide FOV for more immersive experience
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            camera.position.y = 1;  // Set a slight offset on Y-axis for better view
+            
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);  // Full-screen renderer
+            container.appendChild(renderer.domElement);
+            
+            // Add ambient light and directional light for realism
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+    
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 10, 5);
+            scene.add(directionalLight);
+    
+            // Load the 3D model
+            const loader = new THREE.GLTFLoader();
+            loader.load("{% static 'robot.glb' %}", function (gltf) {
+                robot = gltf.scene;
+                robot.scale.set(1.5, 1.5, 1.5);  // Adjust the size of the robot
+                robot.position.y = 0;  // Initial position at the center
+                scene.add(robot);
+            });
+    
+            clock = new THREE.Clock();
+            animate();
+        }
+    
+        // Scroll animation variables
+        let scrollY = 0;
+        let targetY = 0;
+        const smoothness = 0.1;  // Smoothing factor for scroll movement
+    
+        // On scroll, capture the scroll position
+        window.addEventListener('scroll', () => {
+            targetY = window.scrollY || window.pageYOffset;
+        });
+    
+        // Main animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+    
+            // Smooth transition for scroll value
+            scrollY += (targetY - scrollY) * smoothness;
+    
+            if (robot) {
+                // Keep robot facing forward (avoid unwanted rotation)
+                robot.rotation.x = 0; // No X rotation
+                robot.rotation.z = 0; // No Z rotation
+                robot.rotation.y = 0; // Keep the robot upright
+    
+                // Adjust robot's vertical position based on the scroll value
+                const speedFactor = 0.005;  // Adjust this for the speed of movement
+                robot.position.y = -scrollY * speedFactor;
+    
+                // Optional: Add slight oscillation or subtle movement for a floating feel
+                robot.position.z = Math.sin(scrollY * 0.05) * 0.5; // Dynamic oscillation in depth (Z-axis)
+    
+                // Optional: Add slight rotation to the robot for realism
+                robot.rotation.y += 0.002;  // Adjust to rotate over time
+            }
+    
+            // Move camera smoothly upwards with the scroll (camera tilt effect)
+            camera.position.y = Math.sin(scrollY * 0.002) * 2;  // Slight camera movement for dynamic effect
+            camera.position.z = 5 + Math.cos(scrollY * 0.002) * 0.5;  // Slight zoom effect
+    
+            // Render the scene with updated camera position
+            renderer.render(scene, camera);
+        }
+    
+        // Handle resizing of the window for responsiveness
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    
+        init();
     </script>
     
 </script>

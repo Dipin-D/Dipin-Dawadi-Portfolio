@@ -24,8 +24,11 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-        <h2 class="section-title">About Me
+
+
+        
         </h2>
+
         <div class="about-content">
             <div class="about-image">
                 <div class="flip-book">
@@ -36,8 +39,6 @@
             </div>
 
             <div class="about-text">
-                <div class="card">
-
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
@@ -45,10 +46,23 @@
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
             </div>
-            </div>
         </div>
     </div>
 </section>
+<div>        <h2 class="section-title">About Me
+    <model-viewer 
+    id="scroll-robot"
+    src="{% static 'robot.glb' %}"
+    alt="Robot"
+    ar
+    ar-modes="webxr scene-viewer quick-look"
+    environment-image="neutral"
+    auto-rotate
+    camera-controls
+    autoplay  
+    animation-name="Flight"  
+    class="robot-center"
+></model-viewer></div>
 <!-- Skills Section -->
 <section id="skills" class="animation-fade">
     <div class="container">
@@ -248,7 +262,28 @@
         }
       });
     </script>
-    
+    <script>
+        const robot = document.getElementById('scroll-robot');
+      
+        // Store initial position
+        let lastScrollY = window.scrollY;
+      
+        // Add event listener
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+      
+          // Make it move in both X and Y (floating/flying effect)
+          const translateX = scrollY * 0.2; // Moves right a bit
+          const translateY = scrollY * 0.1; // Moves down a bit
+      
+          robot.style.transform = `translate(${translateX}px, ${translateY}px) rotateY(${scrollY * 0.1}deg)`;
+          
+          // Optional: smooth transition
+          robot.style.transition = 'transform 0.1s ease-out';
+        });
+      </script>
+      
+        
 </script>
 
 {% endblock %}
