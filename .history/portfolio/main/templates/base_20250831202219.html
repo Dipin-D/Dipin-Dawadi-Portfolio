@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Dipin Dawadi">
+    <meta property="og:description" content="My Journey, Achievements, and Skills">
+    <meta property="og:image" content="https://dipindawadi.com.np/static/image.JPG">
+    <meta property="og:url" content="https://dipindawadi.com.np">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Dipin Dawadi">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dipin Dawadi">
+    <meta name="twitter:description" content="My Journey, Achievements, and Skills">
+    <meta name="twitter:image" content="https://dipindawadi.com.np/static/image.JPG">
+    <meta name="twitter:creator" content="@dipindawadi">
+    <!-- Favicon -->
+    <link rel="icon" href="https://dipindawadi.com.np/path/to/favicon.ico" type="image/x-icon">
+    <title>{% block title %}Dipin Dawadi{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Main CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+  <header style="position: relative; overflow: hidden;">
+  
+    <!-- Centered Text -->
+    <div class="header-content">
+      <h1>Dipin Dawadi</h1>
+      <p>My Journey, Achievements, and Skills</p>
+    </div>
+  </header>
+  
+  <div id="particles-js"></div>
+
+    <div class="content">
+      
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer with class "footer" added -->
+    <footer class="footer">
+      <a href="https://www.linkedin.com/in/dipin-dawadi/" target="_blank">
+         LinkedIn <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Dipin-D/Dipin-Portfolio" target="_blank">
+          Github <i class="fab fa-github"></i>
+      </a>
+  </footer>
+  
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+ <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar toggle logic
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navbar = document.querySelector('.navbar');
+        const navItems = document.querySelectorAll('.navbar-item');
+        let navOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            navOpen = !navOpen;
+            if (navOpen) {
+                navbar.classList.add('open');
+                gsap.fromTo(navItems,
+                    { opacity: 0, y: -30 },
+                    { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'expo.out' }
+                );
+            } else {
+                gsap.to(navItems, {
+                    opacity: 0,
+                    y: -30,
+                    duration: 0.3,
+                    stagger: -0.1,
+                    ease: 'expo.in',
+                    onComplete: () => navbar.classList.remove('open')
+                });
+            }
+        });
+
+        // Scroll animations for sections
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Three.js 3D Background
+        let scene, camera, renderer, starGeo, stars, mouseX = 0, mouseY = 0;
+        const canvas = document.getElementById('three-js-canvas');
+        const starCount = 10000;
+
+        function init() {
+            // Set up scene, camera, and renderer
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 1;
+            camera.rotation.x = Math.PI / 2;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x121212, 1);
+
+            // Create star geometry
+            starGeo = new THREE.BufferGeometry();
+            const positions = [];
+            for(let i = 0; i < starCount; i++) {
+                positions.push(
+                    Math.random() * 600 - 300,
+                    Math.random() * 600 - 300,
+                    Math.random() * 600 - 300
+                );
+            }
+            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+
+            // Create star material
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.5,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            // Create the points object and add to scene
+            stars = new THREE.Points(starGeo, starMaterial);
+            scene.add(stars);
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+            // Handle mouse movement for interactive camera rotation
+            document.addEventListener('mousemove', onMouseMove, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onMouseMove(event) {
+            mouseX = event.clientX - window.innerWidth / 2;
+            mouseY = event.clientY - window.innerHeight / 2;
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate star positions
+            starGeo.attributes.position.array.forEach((val, i) => {
+                const z = starGeo.attributes.position.array[i + 2];
+                if (z > -200) {
+                    starGeo.attributes.position.array[i + 2] -= 0.5;
+                } else {
+                    starGeo.attributes.position.array[i + 2] = 200;
+                }
+            });
+            starGeo.attributes.position.needsUpdate = true;
+
+            // Rotate stars slightly with mouse movement
+            stars.rotation.y += mouseX * 0.00001;
+            stars.rotation.x += mouseY * 0.00001;
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize and start animation on window load
+        window.onload = function() {
+            init();
+            animate();
+        };
+    </script>
+</body>
+</html>

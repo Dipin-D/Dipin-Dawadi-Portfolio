@@ -26,19 +26,21 @@
 <section id="about" class="animation-fade">
     <h2 class="section-title">About Me</h2>
     <div class="about-content">
+
         <!-- Combined Card -->
         <div class="card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; padding: 1.5rem;">
+
             <!-- Image -->
-            <div class="about-image">
+            <div class="about-image" style="flex: 1; min-width: 200px;">
                 <div class="flip-book">
                     <div class="page">
-                        <img src="{% static 'image.JPG' %}" alt="Picture">
+                        <img src="{% static 'image.JPG' %}" alt="Your Picture" style="width:100%; border-radius: 12px; object-fit: cover;">
                     </div>
                 </div>
             </div>
 
             <!-- Text -->
-            <div class="about-text">
+            <div class="about-text" style="flex: 2; min-width: 200px; padding: 1rem;">
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, ERP systems, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>

@@ -2,7 +2,106 @@
 {% block content %}
 {% load static %}
 
+<style>
+/* Section and Container Styling */
+#about {
+    padding: 60px 20px;
+    background-color: #f8f9fa; /* A light background for contrast */
+    color: #333;
+}
 
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #4B0082; /* A modern accent color */
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .about-content {
+        flex-direction: row;
+    }
+}
+
+/* 3D Tilt Effect on the Image */
+.about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tilt-container {
+    position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: transform 0.2s ease-out;
+    max-width: 350px;
+    width: 100%;
+}
+
+.tilt-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-out;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.tilt-container:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+}
+
+.tilt-container:hover .image-overlay {
+    opacity: 1;
+}
+
+/* About Text Card */
+.about-text {
+    flex: 2;
+}
+
+.about-text .card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.about-text .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+</style>
 <!-- Hamburger icon -->
 <div class="menu-toggle">
     <div class="bar"></div>
@@ -24,21 +123,18 @@
   
   <div class="main-content" >
 <section id="about" class="animation-fade">
-    <h2 class="section-title">About Me</h2>
+    <h2 class="section-title">About Me
+    </h2>
     <div class="about-content">
-        <!-- Combined Card -->
-        <div class="card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; padding: 1.5rem;">
-            <!-- Image -->
-            <div class="about-image">
-                <div class="flip-book">
-                    <div class="page">
-                        <img src="{% static 'image.JPG' %}" alt="Picture">
-                    </div>
-                </div>
+        <div class="about-image">
+            <div class="tilt-container">
+                <img src="{% static 'image.JPG' %}" alt="Your Picture">
+                <div class="image-overlay"></div>
             </div>
+        </div>
 
-            <!-- Text -->
-            <div class="about-text">
+        <div class="about-text">
+            <div class="card">
                 <p>
                     I am a driven professional specializing in computer science, tech consulting, ERP systems, and software development. With a strong passion for technology and problem-solving, I excel in tackling complex challenges and delivering creative solutions that drive meaningful impact. My adaptability and eagerness to learn empower me to stay ahead in a rapidly evolving tech landscape. I make each project an opportunity for growth and discovery!
                 </p>
@@ -46,12 +142,9 @@
                     Outside of work, I enjoy engaging in competitive games of ping pong and cherishing moments with my supportive and inspiring partner. These pursuits keep me grounded and energized, balancing my technical focus with personal connection and recreation.
                 </p>
             </div>
-
         </div>
-
     </div>
 </section>
-
 <!-- Skills Section -->
 <section id="skills" class="animation-fade">
     <div class="container">

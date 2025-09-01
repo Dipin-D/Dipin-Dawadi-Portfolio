@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Dipin Dawadi">
+    <meta property="og:description" content="My Journey, Achievements, and Skills">
+    <meta property="og:image" content="https://dipindawadi.com.np/static/image.JPG">
+    <meta property="og:url" content="https://dipindawadi.com.np">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Dipin Dawadi">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dipin Dawadi">
+    <meta name="twitter:description" content="My Journey, Achievements, and Skills">
+    <meta name="twitter:image" content="https://dipindawadi.com.np/static/image.JPG">
+    <meta name="twitter:creator" content="@dipindawadi">
+    <link rel="icon" href="https://dipindawadi.com.np/path/to/favicon.ico" type="image/x-icon">
+    <title>{% block title %}Dipin Dawadi{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Styles for the Three.js canvas */
+        #three-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+  <header style="position: relative; overflow: hidden;">
+    <div id="three-container"></div>
+    <div class="header-content">
+      <h1>Dipin Dawadi</h1>
+      <p>My Journey, Achievements, and Skills</p>
+    </div>
+  </header>
+  
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="footer">
+    <a href="https://www.linkedin.com/in/dipin-dawadi/" target="_blank">
+      LinkedIn <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://github.com/Dipin-D/Dipin-Portfolio" target="_blank">
+      Github <i class="fab fa-github"></i>
+    </a>
+  </footer>
+  
+  <script>
+    // Smooth scrolling for navigation
+    document.querySelectorAll('nav ul li a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Three.js Configuration
+    const container = document.getElementById('three-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Create a sphere
+    const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const material = new THREE.MeshPhongMaterial({ 
+      color: 0x4B0082, 
+      specular: 0x8A2BE2, 
+      shininess: 50 
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 5); // soft white light
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+    directionalLight.position.set(5, 5, 5).normalize();
+    scene.add(directionalLight);
+
+    camera.position.z = 5;
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      sphere.rotation.x += 0.005;
+      sphere.rotation.y += 0.005;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  </script>
+
+</body>
+</html>

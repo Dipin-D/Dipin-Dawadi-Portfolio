@@ -170,6 +170,7 @@ section {
 /* ===== Card Styles ===== */
 .card {
     background-color: #1e2a37;
+    border: 2px solid #27466e; 
     margin: 15px 0;
     width: 100%;
     border-radius: 10px;

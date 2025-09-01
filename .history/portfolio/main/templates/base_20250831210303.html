@@ -41,6 +41,8 @@
   </header>
   
   <div id="particles-js"></div>
+    <div id="three-cointainer"></div>
+
 
     <div class="content">
       
@@ -72,61 +74,67 @@
     <!-- Particles.js Library -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-  particlesJS("particles-js", {
-    "particles": {
-      "number": {
-        "value": 150, // Increased particle count for a denser field
-        "density": {
-          "enable": true,
-          "value_area": 1200 // Increased density area to fill more space
-        }
-      },
-      "color": { "value": "#ffffff" },
-      "shape": {
-        "type": "star", // Changed shape to 'star' for a different visual
-        "stroke": { "width": 0, "color": "#000000" },
-        "polygon": { "nb_sides": 5 }
-      },
-      "opacity": {
-        "value": 0.8, // Increased opacity for a more prominent effect
-        "random": true, // Made opacity random for a twinkling effect
-        "anim": { "enable": true, "speed": 1, "opacity_min": 0.2, "sync": false }
-      },
-      "size": {
-        "value": 2, // Slightly larger particles
-        "random": true,
-        "anim": { "enable": true, "speed": 40, "size_min": 0.1, "sync": false }
-      },
-      "line_linked": {
-        "enable": false // Disabled lines for a "star field" or "galaxy" look
-      },
-      "move": {
-        "enable": true,
-        "speed": 5, // Increased speed for faster movement
-        "direction": "outward", // Changed direction to 'outward' for a sense of explosion or depth
-        "random": true,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false,
-        "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 }
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": { "enable": true, "mode": "bubble" }, // Changed hover mode to 'bubble' for a cool effect
-        "onclick": { "enable": true, "mode": "repulse" },
-        "resize": true
-      },
-      "modes": {
-        "bubble": { "distance": 200, "size": 6, "duration": 2 }, // Bubble effect settings
-        "repulse": { "distance": 150, "duration": 0.4 },
-        "push": { "particles_nb": 4 }
-      }
-    },
-    "retina_detect": true
-  });
+    // Three.js Configuration for a Star Field
+    const container = document.getElementById('three-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // --- Create the Stars ---
+    const starCount = 5000;
+    const starGeometry = new THREE.BufferGeometry();
+    const starVertices = [];
+
+    // Generate random star positions
+    for (let i = 0; i < starCount; i++) {
+        const x = THREE.MathUtils.randFloatSpread(2000); // Spread across a 3D box
+        const y = THREE.MathUtils.randFloatSpread(2000);
+        const z = THREE.MathUtils.randFloatSpread(2000);
+        starVertices.push(x, y, z);
+    }
+
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+
+    // Create the star material
+    const starMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 1.5,
+        sizeAttenuation: true, // Stars appear smaller the farther they are
+        blending: THREE.AdditiveBlending, // Makes stars glow
+        transparent: true,
+        opacity: 0.8
+    });
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+    // --- End Star Creation ---
+
+    camera.position.z = 1000; // Place the camera inside the star field
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Gently rotate the star field to create a drifting effect
+        stars.rotation.x += 0.0002;
+        stars.rotation.y += 0.0002;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
 </script>
 </body>
 </html>
