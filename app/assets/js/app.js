@@ -11,6 +11,10 @@ const menuToggle = document.querySelector(".menu-toggle");
 const themeToggle = document.querySelector(".theme-toggle");
 const revealObserverSupported = "IntersectionObserver" in window;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isMobileLite =
+  window.matchMedia("(max-width: 760px)").matches ||
+  window.matchMedia("(pointer: coarse)").matches ||
+  ((navigator.deviceMemory || 8) <= 4);
 let ticking = false;
 
 const storedTheme = localStorage.getItem("portfolio-theme");
@@ -18,6 +22,10 @@ if (storedTheme === "light" || storedTheme === "dark") {
   root.dataset.theme = storedTheme;
 } else {
   root.dataset.theme = "dark";
+}
+
+if (isMobileLite) {
+  root.classList.add("lite-motion");
 }
 
 document.title = pageName === "home" ? siteData.site.title : `${pageName[0].toUpperCase()}${pageName.slice(1)} | ${siteData.site.name}`;
@@ -29,7 +37,9 @@ activateNav();
 bindUi();
 setupReveal();
 setupMotion();
-initScene();
+if (!isMobileLite && !prefersReducedMotion) {
+  initScene();
+}
 
 function setupIntro() {
   if (pageName !== "home") return;
@@ -43,7 +53,7 @@ function setupIntro() {
     return;
   }
 
-  const disposeIntroCanvas = initIntroCanvas();
+  const disposeIntroCanvas = isMobileLite ? () => {} : initIntroCanvas();
   const greetings = [
     "Hello",
     "Namaste",
@@ -67,7 +77,7 @@ function setupIntro() {
     "Vanakkam",
   ];
 
-  const totalDuration = 4000;
+  const totalDuration = isMobileLite ? 2200 : 4000;
   const interval = Math.floor(totalDuration / greetings.length);
   let greetingIndex = 0;
 
@@ -178,7 +188,7 @@ function setupReveal() {
 
 function setupMotion() {
   updateScrollScene();
-  if (!prefersReducedMotion) {
+  if (!prefersReducedMotion && !isMobileLite) {
     window.addEventListener("scroll", requestTick, { passive: true });
     window.addEventListener("resize", requestTick);
   }
