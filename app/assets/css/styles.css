@@ -1367,6 +1367,10 @@ h3 {
   padding: 30px;
 }
 
+.page-hero h1 {
+  max-width: 18ch;
+}
+
 .page-summary {
   margin-top: 18px;
   max-width: 60ch;

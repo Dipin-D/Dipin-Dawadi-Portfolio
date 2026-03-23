@@ -271,8 +271,8 @@ export function renderPage(pageName, basePath = "./") {
     app.innerHTML = `
       <section class="page-hero panel" data-reveal data-scroll-section>
         <p class="eyebrow">Projects</p>
-        <h1>All project work in one place.</h1>
-        <p class="page-summary">A cleaner, static setup that keeps the visual site separate from the content data.</p>
+        <h1>Projects and shipped work.</h1>
+        <p class="page-summary">A quick archive of what I've built.</p>
       </section>
       <section class="archive-grid">${siteData.projects.map(projectArchiveItem).join("")}</section>
     `;
@@ -283,8 +283,8 @@ export function renderPage(pageName, basePath = "./") {
     app.innerHTML = `
       <section class="page-hero panel" data-reveal data-scroll-section>
         <p class="eyebrow">Experience</p>
-        <h1>Roles, programs, and technical work over time.</h1>
-        <p class="page-summary">This page keeps the full experience list in a format that is much easier to edit later than giant Django templates.</p>
+        <h1>Roles, programs, and technical work.</h1>
+        <p class="page-summary">A quick timeline of my work.</p>
       </section>
       <section class="timeline">${siteData.experiences.map(experienceTimelineItem).join("")}</section>
     `;
