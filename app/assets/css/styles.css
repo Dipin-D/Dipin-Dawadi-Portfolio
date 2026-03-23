@@ -210,10 +210,7 @@ textarea {
 }
 
 .nebula-butterfly {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transform: translateY(calc(var(--scroll-y) * -0.03));
+  display: none;
 }
 
 .nebula-core,

@@ -48,12 +48,12 @@ function setupIntro() {
   const word = intro.querySelector("[data-intro-word]");
   const sub = intro.querySelector("[data-intro-sub]");
 
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || isMobileLite) {
     intro.remove();
     return;
   }
 
-  const disposeIntroCanvas = isMobileLite ? () => {} : initIntroCanvas();
+  const disposeIntroCanvas = initIntroCanvas();
   const greetings = [
     "Hello",
     "Namaste",
@@ -77,7 +77,7 @@ function setupIntro() {
     "Vanakkam",
   ];
 
-  const totalDuration = isMobileLite ? 2200 : 4000;
+  const totalDuration = 4000;
   const interval = Math.floor(totalDuration / greetings.length);
   let greetingIndex = 0;
 
