@@ -3,44 +3,56 @@ export const siteData = {
     name: "Dipin Dawadi",
     title: "Dipin Dawadi | Portfolio",
     description:
-      "Portfolio of Dipin Dawadi, focused on software engineering, data, ERP consulting, and product-minded technical work.",
+      "Portfolio of Dipin Dawadi, a computer science graduate focused on software engineering, data, ERP consulting, and product-minded technical work.",
     emailFormAction: "https://formspree.io/f/mqaqzayy",
-    availability: "Open to software engineering, data, and consulting roles",
-    location: "United States",
-    heroImage: "assets/image.JPG",
+    email: "dipindawadi@gmail.com",
+    availability: "Open to software engineering, data, ERP, and consulting roles",
+    location: "Huntsville, Alabama",
+    heroImage: "assets/hero-portrait-v2.png",
     socialLinks: [
       { label: "GitHub", href: "https://github.com/Dipin-D" },
       { label: "LinkedIn", href: "https://www.linkedin.com/in/dipin-dawadi/" },
     ],
   },
   profile: {
-    headline: "Software. Data. ERP.",
+    headline: "I build software and data solutions.",
     summary:
-      "I am a computer science student focused on building useful systems: web apps, analytics workflows, automation, and ERP-adjacent process improvements. I like work that sits between implementation, operations, and clear communication.",
+      "Computer Science graduate building reliable products, with hands-on experience improving ERP workflows.",
     focusAreas: [
       "Python, Django, JavaScript, SQL, and C++",
       "SAP S/4HANA, SAP GRC, and process improvement",
       "Dashboards, analytics, and automation",
     ],
   },
+  highlights: {
+    honors: ["Salutatorian", "Presidential Scholarship Recipient", "Gold Presidential Medallion", "Honor Roll"],
+    languages: ["Nepali — Native or bilingual", "Hindi — Professional working", "English — Full professional"],
+  },
+  education: {
+    school: "Alabama A&M University",
+    degree: "Bachelor of Science in Computer Science",
+    period: "2022 - 2026",
+    location: "Huntsville, Alabama",
+    distinction: "Graduated with a 4.0/4.0 GPA",
+  },
   stats: [
     { value: "1,500+", label: "wireless certification tests run" },
     { value: "500+", label: "students supported by CMS rollout scope" },
     { value: "Top 10", label: "finish in HBCU app pitch competition" },
-    { value: "3", label: "core lanes: software, data, ERP" },
+    { value: "4.0", label: "graduating GPA at Alabama A&M" },
   ],
   skillGroups: [
     {
       title: "Engineering",
-      items: ["Python", "Django", "Java", "C++", "JavaScript", "Flask"],
+      items: ["Python", "Django", "Java", "C++", "JavaScript", "Flask", "AWS"],
     },
     {
       title: "Data",
-      items: ["SQL", "Pandas", "Power BI", "Tableau", "Machine Learning", "Analytics"],
+      items: ["SQL", "Pandas", "Power BI", "Tableau", "Crystal Reports", "Machine Learning", "Analytics"],
     },
     {
       title: "Enterprise",
-      items: ["SAP S/4HANA", "SAP ECC", "SAP GRC", "BAAN", "Process Automation"],
+      items: ["SAP S/4HANA", "SAP BusinessObjects", "SAP GRC", "BAAN", "Process Automation"],
     },
     {
       title: "Delivery",
@@ -131,17 +143,49 @@ export const siteData = {
     {
       title: "SAP IT Intern",
       organization: "EnerSys",
-      period: "Jun 2025 - Present",
+      period: "Aug 2025 - May 2026",
       location: "Remote",
       image: "assets/images/enersys1.jpg",
       summary:
-        "Built automation that routed ME tickets directly to SAP teams, supported SAP GRC audit work, and partnered on BAAN-focused process improvements.",
+        "Advanced enterprise reporting and SAP modernization work using Crystal Reports, SQL, SAP BusinessObjects, and SAP GRC.",
       highlights: [
-        "Reduced reliance on manual email-based routing with automation",
-        "Supported audit and compliance efforts with SAP GRC",
-        "Contributed to an internal Shark Tank-style innovation pitch",
+        "Reverse-engineered Crystal Reports dependencies and used SQL to extract non-exposed report metadata",
+        "Developed business-aligned reports and supported migration from Crystal Reports to SAP BusinessObjects",
+        "Supported ME ticket-routing automation and SAP GRC audit and compliance efforts",
       ],
       featured: true,
+      links: [],
+    },
+    {
+      title: "SAP IT Intern",
+      organization: "EnerSys",
+      period: "Jun 2025 - Aug 2025",
+      location: "Remote",
+      image: "assets/images/enersys2.jpg",
+      summary:
+        "Supported BAAN auditing and collaborated on an internal cross-functional innovation challenge.",
+      highlights: [
+        "Partnered with developers to design an automated BAAN auditing process",
+        "Helped streamline compliance and oversight activities",
+        "Generated and pitched a product concept in a Shark Tank-style challenge",
+      ],
+      featured: false,
+      links: [],
+    },
+    {
+      title: "Event Technology & Engagement Programs Lead",
+      organization: "Google Developers Group",
+      period: "Aug 2025 - Apr 2026",
+      location: "Alabama A&M University",
+      image: "assets/images/google.jfif",
+      summary:
+        "Led event technology and engagement programming for the Google Developers Group chapter at Alabama A&M University.",
+      highlights: [
+        "Coordinated technology-focused events and student engagement",
+        "Supported developer community programming on campus",
+        "Connected students with collaborative technical learning opportunities",
+      ],
+      featured: false,
       links: [],
     },
     {
@@ -182,7 +226,7 @@ export const siteData = {
     {
       title: "Deloitte Technology Consulting Course",
       organization: "Deloitte",
-      period: "Jan 2025 - Present",
+      period: "Jan 2025 - Apr 2025",
       location: "Semester program",
       image: "assets/images/deloitte_course.PNG",
       summary:
@@ -198,7 +242,7 @@ export const siteData = {
     {
       title: "Data Science Competition Scholar",
       organization: "FICO",
-      period: "Jan 2025 - Present",
+      period: "Jan 2025 - Apr 2025",
       location: "Huntsville, Alabama",
       image: "assets/images/FICO.jfif",
       summary:
@@ -357,6 +401,26 @@ export const siteData = {
     },
   ],
   certifications: [
+    {
+      title: "Socially Just Coding: Develop in Swift Explorations Pt. 1",
+      issuer: "Propel Center",
+      href: "https://www.linkedin.com/in/dipin-dawadi/",
+    },
+    {
+      title: "Enterprise Design Thinking Practitioner",
+      issuer: "IBM",
+      href: "https://www.linkedin.com/in/dipin-dawadi/",
+    },
+    {
+      title: "Getting Started with Artificial Intelligence",
+      issuer: "IBM",
+      href: "https://www.linkedin.com/in/dipin-dawadi/",
+    },
+    {
+      title: "FICO Data Analytics Challenge Certificate",
+      issuer: "FICO",
+      href: "https://www.linkedin.com/in/dipin-dawadi/",
+    },
     {
       title: "Accelerating SAP Project Delivery Using SAP Joule for Consultants",
       issuer: "SAP",

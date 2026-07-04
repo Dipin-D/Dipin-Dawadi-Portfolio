@@ -1,6 +1,5 @@
 import { renderPage, siteData } from "./render.js";
 import { initScene } from "./scene.js";
-import { initIntroCanvas } from "./intro-canvas.js";
 
 const root = document.documentElement;
 const body = document.body;
@@ -8,7 +7,6 @@ const pageName = body.dataset.page || "home";
 const basePath = body.dataset.base || "./";
 const nav = document.querySelector(".site-nav");
 const menuToggle = document.querySelector(".menu-toggle");
-const themeToggle = document.querySelector(".theme-toggle");
 const revealObserverSupported = "IntersectionObserver" in window;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobileLite =
@@ -17,12 +15,7 @@ const isMobileLite =
   ((navigator.deviceMemory || 8) <= 4);
 let ticking = false;
 
-const storedTheme = localStorage.getItem("portfolio-theme");
-if (storedTheme === "light" || storedTheme === "dark") {
-  root.dataset.theme = storedTheme;
-} else {
-  root.dataset.theme = "dark";
-}
+root.dataset.theme = "dark";
 
 if (isMobileLite) {
   root.classList.add("lite-motion");
@@ -32,88 +25,13 @@ document.title = pageName === "home" ? siteData.site.title : `${pageName[0].toUp
 document.querySelector('meta[name="description"]')?.setAttribute("content", siteData.site.description);
 
 renderPage(pageName, basePath);
-setupIntro();
 activateNav();
 bindUi();
+setupPortraitTilt();
 setupReveal();
 setupMotion();
 if (!isMobileLite && !prefersReducedMotion) {
   initScene();
-}
-
-function setupIntro() {
-  if (pageName !== "home") return;
-  const intro = document.querySelector(".intro-overlay");
-  if (!intro) return;
-  const word = intro.querySelector("[data-intro-word]");
-  const sub = intro.querySelector("[data-intro-sub]");
-
-  if (prefersReducedMotion || isMobileLite) {
-    intro.remove();
-    return;
-  }
-
-  const disposeIntroCanvas = initIntroCanvas();
-  const greetings = [
-    "Hello",
-    "Namaste",
-    "Hola",
-    "Bonjour",
-    "Ciao",
-    "Hallo",
-    "Ola",
-    "Hej",
-    "Ahoj",
-    "Merhaba",
-    "Salaam",
-    "Konnichiwa",
-    "Annyeong",
-    "Ni Hao",
-    "Sabaidee",
-    "Xin chao",
-    "Jambo",
-    "Sawubona",
-    "Shalom",
-    "Vanakkam",
-  ];
-
-  const totalDuration = 4000;
-  const interval = Math.floor(totalDuration / greetings.length);
-  let greetingIndex = 0;
-
-  if (word) {
-    word.textContent = greetings[0];
-  }
-
-  if (sub) {
-    sub.textContent = "Welcome";
-  }
-
-  const greetingTimer = window.setInterval(() => {
-    greetingIndex += 1;
-    if (greetingIndex >= greetings.length) {
-      window.clearInterval(greetingTimer);
-      return;
-    }
-
-    if (word) {
-      word.classList.remove("is-visible");
-      window.requestAnimationFrame(() => {
-        word.textContent = greetings[greetingIndex];
-        word.classList.add("is-visible");
-      });
-    }
-  }, interval);
-
-  window.setTimeout(() => {
-    intro.classList.add("is-leaving");
-  }, totalDuration);
-
-  window.setTimeout(() => {
-    window.clearInterval(greetingTimer);
-    disposeIntroCanvas();
-    intro.remove();
-  }, totalDuration + 700);
 }
 
 function activateNav() {
@@ -132,13 +50,18 @@ function bindUi() {
       menuToggle.setAttribute("aria-expanded", String(!expanded));
       nav.classList.toggle("is-open");
     });
-  }
 
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
-      root.dataset.theme = nextTheme;
-      localStorage.setItem("portfolio-theme", nextTheme);
+    nav.addEventListener("click", (event) => {
+      if (!event.target.closest("a")) return;
+      menuToggle.setAttribute("aria-expanded", "false");
+      nav.classList.remove("is-open");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      menuToggle.setAttribute("aria-expanded", "false");
+      nav.classList.remove("is-open");
+      menuToggle.focus();
     });
   }
 
@@ -157,6 +80,30 @@ function bindUi() {
       });
     });
   }
+}
+
+function setupPortraitTilt() {
+  const stage = document.querySelector(".hero-visual-stage");
+  const portrait = document.querySelector(".hero-portrait-wrap");
+  if (!stage || !portrait || prefersReducedMotion || isMobileLite) return;
+
+  const updateTilt = (event) => {
+    const rect = stage.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+    portrait.style.setProperty("--portrait-ry", `${((x - 0.5) * 30).toFixed(2)}deg`);
+    portrait.style.setProperty("--portrait-rx", `${((0.5 - y) * 22).toFixed(2)}deg`);
+    portrait.style.setProperty("--glare-x", `${(x * 100).toFixed(1)}%`);
+    portrait.style.setProperty("--glare-y", `${(y * 100).toFixed(1)}%`);
+    portrait.classList.add("is-tilting");
+  };
+
+  stage.addEventListener("pointermove", updateTilt);
+  stage.addEventListener("pointerleave", () => {
+    portrait.classList.remove("is-tilting");
+    portrait.style.removeProperty("--portrait-rx");
+    portrait.style.removeProperty("--portrait-ry");
+  });
 }
 
 function setupReveal() {

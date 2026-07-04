@@ -70,10 +70,10 @@ export function initScene() {
     varying float v_lineMask;
 
     vec3 palette(float t) {
-      vec3 moon = vec3(0.84, 0.88, 0.94);
-      vec3 steel = vec3(0.56, 0.65, 0.78);
-      vec3 slate = vec3(0.36, 0.43, 0.54);
-      return mix(mix(moon, steel, step(0.45, t)), slate, 0.24);
+      vec3 ember = vec3(1.0, 0.57, 0.30);
+      vec3 copper = vec3(0.66, 0.25, 0.10);
+      vec3 ash = vec3(0.34, 0.24, 0.19);
+      return mix(mix(ember, copper, step(0.45, t)), ash, 0.24);
     }
 
     void main() {
