@@ -1,12 +1,12 @@
 export const siteData = {
   site: {
     name: "Dipin Dawadi",
-    title: "Dipin Dawadi | Portfolio",
+    title: "Dipin Dawadi | ERP Security Analyst",
     description:
-      "Portfolio of Dipin Dawadi, a computer science graduate focused on software engineering, data, ERP consulting, and product-minded technical work.",
+      "Portfolio of Dipin Dawadi, an ERP Security Analyst specializing in access governance, risk, compliance, and enterprise security.",
     emailFormAction: "https://formspree.io/f/mqaqzayy",
     email: "dipindawadi@gmail.com",
-    availability: "Open to software engineering, data, ERP, and consulting roles",
+    availability: "ERP Security Analyst focused on access governance and compliance",
     location: "Huntsville, Alabama",
     heroImage: "assets/hero-portrait-v2.png",
     socialLinks: [
@@ -15,13 +15,13 @@ export const siteData = {
     ],
   },
   profile: {
-    headline: "I build software and data solutions.",
+    headline: "I secure enterprise access across SAP environments.",
     summary:
-      "Computer Science graduate building reliable products, with hands-on experience improving ERP workflows.",
+      "ERP Security Analyst supporting access governance, SoD analysis, compliance, and production security across global SAP and ERP environments.",
     focusAreas: [
-      "Python, Django, JavaScript, SQL, and C++",
-      "SAP S/4HANA, SAP GRC, and process improvement",
-      "Dashboards, analytics, and automation",
+      "SAP S/4HANA, SAP ECC, SAP HANA, and SAP GRC",
+      "Access governance, role management, and SoD analysis",
+      "SOX compliance, audit support, and security administration",
     ],
   },
   highlights: {
@@ -141,10 +141,10 @@ export const siteData = {
   ],
   experiences: [
     {
-      title: "SAP Security Analyst",
+      title: "ERP Security Analyst",
       organization: "EnerSys",
       period: "June 2026 - Present",
-      location: "Reading, Pennsylvania",
+      location: "Remote",
       image: "assets/images/enersys1.jpg",
       summary:
         "Provide security administration and production support across SAP and ERP environments.",

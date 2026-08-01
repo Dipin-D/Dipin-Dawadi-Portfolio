@@ -215,17 +215,17 @@ export function renderPage(pageName, basePath = "./") {
               </div>
             </div>
             <span class="hero-orbit-chip orbit-chip-a" data-depth="0.35">SAP</span>
-            <span class="hero-orbit-chip orbit-chip-b" data-depth="0.48">PYTHON</span>
-            <span class="hero-orbit-chip orbit-chip-c" data-depth="0.28">AWS</span>
-            <span class="hero-orbit-chip orbit-chip-d" data-depth="0.42">DATA</span>
+            <span class="hero-orbit-chip orbit-chip-b" data-depth="0.48">GRC</span>
+            <span class="hero-orbit-chip orbit-chip-c" data-depth="0.28">SOX</span>
+            <span class="hero-orbit-chip orbit-chip-d" data-depth="0.42">ACCESS</span>
           </div>
         </div>
       </section>
 
       <div class="kinetic-strip" aria-label="Areas of focus">
         <div class="kinetic-track">
-          <span>SOFTWARE</span><i>✦</i><span>DATA</span><i>✦</i><span>ERP</span><i>✦</i><span>AUTOMATION</span><i>✦</i>
-          <span>SOFTWARE</span><i>✦</i><span>DATA</span><i>✦</i><span>ERP</span><i>✦</i><span>AUTOMATION</span><i>✦</i>
+          <span>SAP SECURITY</span><i>✦</i><span>ACCESS GOVERNANCE</span><i>✦</i><span>GRC</span><i>✦</i><span>COMPLIANCE</span><i>✦</i>
+          <span>SAP SECURITY</span><i>✦</i><span>ACCESS GOVERNANCE</span><i>✦</i><span>GRC</span><i>✦</i><span>COMPLIANCE</span><i>✦</i>
         </div>
       </div>
 
