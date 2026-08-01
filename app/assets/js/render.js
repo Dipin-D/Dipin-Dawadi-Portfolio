@@ -201,7 +201,6 @@ export function renderPage(pageName, basePath = "./") {
                 <p class="location-line">${siteData.site.location}</p>
                 <div class="hero-actions">
                   <a class="button button-primary" href="#contact">Start a conversation</a>
-                  <a class="button button-secondary" href="./projects/">View selected work ${arrowIcon()}</a>
                 </div>
               </div>
             </div>
@@ -247,7 +246,6 @@ export function renderPage(pageName, basePath = "./") {
         <div class="section-head">
           <div>
             <p class="eyebrow">Experience</p>
-            <h2>Professional experience.</h2>
           </div>
           <a class="text-link" href="./experiences/">See all experience</a>
         </div>

@@ -114,11 +114,11 @@ h2 { line-height: 1.02; }
 :root[data-theme="light"] .hero-ghost-name { -webkit-text-stroke-color: rgba(20, 15, 12, 0.05); }
 .hero-copy-grid { grid-template-columns: 1fr; gap: 18px; }
 .hero-copy-primary h1 {
-  max-width: 11ch;
+  max-width: 13ch;
   color: var(--text);
   background: none;
   -webkit-text-fill-color: currentColor;
-  font-size: clamp(2.8rem, 5.2vw, 4.8rem);
+  font-size: clamp(2.45rem, 4.25vw, 4rem);
 }
 .availability { margin-bottom: 18px; padding: 0; border: 0; background: none; color: var(--muted); text-transform: none; }
 .hero-summary { max-width: 46ch; color: var(--muted); font-size: 1.02rem; line-height: 1.65; }
@@ -418,7 +418,7 @@ input, textarea, button { max-width: 100%; }
 @media (max-width: 1100px) {
   .site-shell { padding-inline: 20px; }
   .hero-panel-compact { grid-template-columns: minmax(0, 1fr) 310px; gap: 34px; padding: 38px; }
-  .hero-copy-primary h1 { font-size: clamp(2.65rem, 5.5vw, 4.2rem); }
+  .hero-copy-primary h1 { font-size: clamp(2.4rem, 4.7vw, 3.7rem); }
   .feature-card, .archive-card,
   .feature-card:nth-child(even), .archive-card:nth-child(even) {
     grid-template-columns: minmax(250px, 0.85fr) minmax(0, 1.15fr);
@@ -429,7 +429,7 @@ input, textarea, button { max-width: 100%; }
 @media (max-width: 900px) {
   .site-nav a { padding-inline: 0.62rem; }
   .hero-panel-compact { grid-template-columns: 1fr; min-height: auto; }
-  .hero-copy-primary h1 { max-width: 12ch; font-size: clamp(3rem, 8vw, 4.6rem); }
+  .hero-copy-primary h1 { max-width: 13ch; font-size: clamp(2.7rem, 7vw, 3.9rem); }
   .hero-visual-stage-compact { min-height: 440px; }
   .hero-portrait-wrap-compact { width: min(48vw, 20rem); }
   .hero-portrait-compact { min-height: 420px; }
@@ -468,7 +468,7 @@ input, textarea, button { max-width: 100%; }
   .site-nav .nav-cta { margin: 4px 0 0; text-align: center; }
   main { gap: 36px; padding-top: 28px; }
   .hero-panel-compact { gap: 26px; padding: 22px; }
-  .hero-copy-primary h1 { font-size: clamp(2.4rem, 11vw, 3.6rem); }
+  .hero-copy-primary h1 { font-size: clamp(2.25rem, 9.5vw, 3.25rem); }
   .hero-summary { font-size: 0.96rem; }
   .hero-actions { display: grid; grid-template-columns: 1fr; }
   .button { width: 100%; }
@@ -499,7 +499,7 @@ input, textarea, button { max-width: 100%; }
 @media (max-width: 520px) {
   .brand-copy { display: none; }
   .hero-panel-compact { padding: 18px; border-radius: 16px; }
-  .hero-copy-primary h1 { font-size: clamp(2.15rem, 11.8vw, 3rem); }
+  .hero-copy-primary h1 { font-size: clamp(2rem, 10.5vw, 2.7rem); }
   .availability { align-items: flex-start; font-size: 0.7rem; line-height: 1.45; }
   .hero-visual-stage-compact { min-height: 315px; }
   .hero-portrait-wrap-compact { width: min(72vw, 15rem); }

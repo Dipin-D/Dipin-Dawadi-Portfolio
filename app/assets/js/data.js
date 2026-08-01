@@ -36,9 +36,9 @@ export const siteData = {
     distinction: "Graduated with a 4.0/4.0 GPA",
   },
   stats: [
-    { value: "1,500+", label: "wireless certification tests run" },
-    { value: "500+", label: "students supported by CMS rollout scope" },
-    { value: "Top 10", label: "finish in HBCU app pitch competition" },
+    { value: "8", label: "SAP & ERP platforms supported" },
+    { value: "16K+", label: "records cleaned and validated with Python" },
+    { value: "Global", label: "GRC consolidation across the Americas & Europe" },
     { value: "4.0", label: "graduating GPA at Alabama A&M" },
   ],
   skillGroups: [
