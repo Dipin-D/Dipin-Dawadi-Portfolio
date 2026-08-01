@@ -43,20 +43,20 @@ export const siteData = {
   ],
   skillGroups: [
     {
-      title: "Engineering",
-      items: ["Python", "Django", "Java", "C++", "JavaScript", "Flask", "AWS"],
+      title: "SAP & ERP",
+      items: ["SAP S/4HANA", "SAP ECC", "SAP GRC", "SAP HANA", "Infor Syteline", "Baan ERP", "SAP BusinessObjects"],
     },
     {
-      title: "Data",
-      items: ["SQL", "Pandas", "Power BI", "Tableau", "Crystal Reports", "Machine Learning", "Analytics"],
+      title: "Security & Compliance",
+      items: ["SAP Security Administration", "User Provisioning", "Role and Access Management", "Segregation of Duties (SoD) Analysis", "User Access Reviews", "Privileged Access Reviews", "SOX Compliance", "Audit Support"],
     },
     {
-      title: "Enterprise",
-      items: ["SAP S/4HANA", "SAP BusinessObjects", "SAP GRC", "BAAN", "Process Automation"],
+      title: "Reporting & Data",
+      items: ["Crystal Reports", "SQL", "Python", "Pandas", "NumPy", "Microsoft Excel", "Power BI"],
     },
     {
-      title: "Delivery",
-      items: ["Technical Consulting", "Presentation Design", "Testing", "Cross-functional Collaboration"],
+      title: "IT Tools",
+      items: ["ManageEngine ServiceDesk", "Microsoft 365"],
     },
   ],
   projects: [
@@ -141,17 +141,19 @@ export const siteData = {
   ],
   experiences: [
     {
-      title: "SAP IT Intern",
+      title: "SAP Security Analyst",
       organization: "EnerSys",
-      period: "Aug 2025 - May 2026",
-      location: "Remote",
+      period: "June 2026 - Present",
+      location: "Reading, Pennsylvania",
       image: "assets/images/enersys1.jpg",
       summary:
-        "Advanced enterprise reporting and SAP modernization work using Crystal Reports, SQL, SAP BusinessObjects, and SAP GRC.",
+        "Provide security administration and production support across SAP and ERP environments.",
       highlights: [
-        "Reverse-engineered Crystal Reports dependencies and used SQL to extract non-exposed report metadata",
-        "Developed business-aligned reports and supported migration from Crystal Reports to SAP BusinessObjects",
-        "Supported ME ticket-routing automation and SAP GRC audit and compliance efforts",
+        "Provide security administration and production support across SAP S/4HANA, SAP ECC, SAP HANA, SAP GRC, SAP MII, SAP BW, Infor Syteline, and Baan environments",
+        "Evaluate access requests for appropriate authorization and potential Segregation of Duties (SoD) conflicts, ensuring access aligns with business responsibilities and security policies",
+        "Support security activities associated with SAP support package upgrades, including access validation, testing, issue resolution, and post-upgrade verification",
+        "Contribute to the ongoing SAP GRC consolidation initiative across the Americas and Europe, helping standardize access governance, approval workflows, controls, and security processes across regional environments",
+        "Maintain accurate documentation and audit trails for user access changes, approvals, security reviews, and compliance-related activities",
       ],
       featured: true,
       links: [],
@@ -159,15 +161,17 @@ export const siteData = {
     {
       title: "SAP IT Intern",
       organization: "EnerSys",
-      period: "Jun 2025 - Aug 2025",
-      location: "Remote",
+      period: "June 2025 - May 2026",
+      location: "Reading, Pennsylvania",
       image: "assets/images/enersys2.jpg",
       summary:
-        "Supported BAAN auditing and collaborated on an internal cross-functional innovation challenge.",
+        "Supported SAP auditing, access governance, compliance, security reporting, and process automation.",
       highlights: [
-        "Partnered with developers to design an automated BAAN auditing process",
-        "Helped streamline compliance and oversight activities",
-        "Generated and pitched a product concept in a Shark Tank-style challenge",
+        "Supported SAP auditing, access-governance, compliance, and security-reporting activities",
+        "Assisted with audit evidence collection, user-access reviews, and analysis of access and compliance data across SAP and Baan environments",
+        "Performed advanced reporting analysis using Crystal Reports, reverse-engineering report dependencies and system structures and leveraging SQL queries to extract non-exposed report metadata",
+        "Cleaned and validated over 16,000+ records using Python (Pandas, NumPy) to improve data accuracy and consistency",
+        "Developed an automation to route ME tickets directly to the appropriate SAP teams, removing reliance on email-based ticket handling and improving ticket management efficiency",
       ],
       featured: false,
       links: [],
@@ -402,29 +406,14 @@ export const siteData = {
   ],
   certifications: [
     {
+      title: "Mind Over Money Skills Financial Literacy",
+      issuer: "SFEPD",
+      href: "https://www.credly.com/badges/4102e608-8a36-4e91-9776-768b3ccf490d/linked_in_profile",
+    },
+    {
       title: "Socially Just Coding: Develop in Swift Explorations Pt. 1",
       issuer: "Propel Center",
       href: "https://www.linkedin.com/in/dipin-dawadi/",
-    },
-    {
-      title: "Enterprise Design Thinking Practitioner",
-      issuer: "IBM",
-      href: "https://www.linkedin.com/in/dipin-dawadi/",
-    },
-    {
-      title: "Getting Started with Artificial Intelligence",
-      issuer: "IBM",
-      href: "https://www.linkedin.com/in/dipin-dawadi/",
-    },
-    {
-      title: "FICO Data Analytics Challenge Certificate",
-      issuer: "FICO",
-      href: "https://www.linkedin.com/in/dipin-dawadi/",
-    },
-    {
-      title: "Accelerating SAP Project Delivery Using SAP Joule for Consultants",
-      issuer: "SAP",
-      href: "https://badger.learning.sap.com/verify/xubev-gyced-kagag-nasin-befyd",
     },
     {
       title: "How Does AI/ML Impact Culture?",
@@ -432,7 +421,7 @@ export const siteData = {
       href: "https://certificate.propelcenter.org/bb1543e2-6b61-49fe-a8c1-e402ce4130c7#acc.MN50j6JU",
     },
     {
-      title: "Python",
+      title: "Python Programming Language",
       issuer: "HackerRank",
       href: "https://www.hackerrank.com/certificates/iframe/3ff3457195a4",
     },
@@ -445,11 +434,6 @@ export const siteData = {
       title: "SQL (Intermediate)",
       issuer: "HackerRank",
       href: "https://www.hackerrank.com/certificates/2a9105be80c1",
-    },
-    {
-      title: "Mind Over Money Skills Financial Literacy",
-      issuer: "Credly",
-      href: "https://www.credly.com/badges/4102e608-8a36-4e91-9776-768b3ccf490d/linked_in_profile",
     },
   ],
 };
