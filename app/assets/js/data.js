@@ -8,16 +8,16 @@ export const siteData = {
     email: "dipindawadi@gmail.com",
     availability: "ERP Security Analyst focused on access governance and compliance",
     location: "Huntsville, Alabama",
-    heroImage: "assets/hero-portrait-v2.png",
+    heroImage: "assets/media/hero-portrait.jpg",
     socialLinks: [
       { label: "GitHub", href: "https://github.com/Dipin-D" },
       { label: "LinkedIn", href: "https://www.linkedin.com/in/dipin-dawadi/" },
     ],
   },
   profile: {
-    headline: "I secure enterprise access across SAP environments.",
+    headline: "Enterprise access. Controlled, reviewed, accountable.",
     summary:
-      "ERP Security Analyst supporting access governance, SoD analysis, compliance, and production security across global SAP and ERP environments.",
+      "I support the decisions behind who gets access, what that access allows, and how every change stands up to review across SAP and ERP environments.",
     focusAreas: [
       "SAP S/4HANA, SAP ECC, SAP HANA, and SAP GRC",
       "Access governance, role management, and SoD analysis",
@@ -36,10 +36,31 @@ export const siteData = {
     distinction: "Graduated with a 4.0/4.0 GPA",
   },
   stats: [
-    { value: "8", label: "SAP & ERP platforms supported" },
+    { value: "8+", label: "SAP & ERP environments supported" },
     { value: "16K+", label: "records cleaned and validated with Python" },
-    { value: "Global", label: "GRC consolidation across the Americas & Europe" },
+    { value: "1,500+", label: "automated wireless safety tests executed" },
     { value: "4.0", label: "graduating GPA at Alabama A&M" },
+  ],
+  upcomingInitiative: {
+    label: "Upcoming assignment",
+    title: "SAP GRC consolidation support",
+    scope: "Americas + Europe",
+    description:
+      "Planned involvement in a cross-regional initiative focused on more consistent access governance, approval workflows, controls, and security processes.",
+    status: "Not yet started",
+  },
+  impactStories: [
+    {
+      index: "01",
+      title: "Production access-risk review",
+      scope: "S/4HANA · ECC · HANA · GRC",
+      signal: "Evaluate",
+      challenge:
+        "Access requests must match business responsibilities while avoiding Segregation of Duties conflicts across a broad production landscape.",
+      response:
+        "Evaluate authorization requests, review potential SoD conflicts, support role and access management, and preserve the approval trail required for compliance.",
+      evidence: ["8+ ERP environments", "SoD analysis", "Role management", "SOX support"],
+    },
   ],
   skillGroups: [
     {
@@ -63,7 +84,7 @@ export const siteData = {
     {
       title: "Minority Business Discovery App",
       tag: "Product + Pitch",
-      image: "assets/images/app_pitch_competition.gif",
+      image: "assets/media/app-pitch.jpg",
       period: "Apr 2025",
       location: "Montgomery, Alabama",
       summary:
@@ -152,7 +173,7 @@ export const siteData = {
         "Provide security administration and production support across SAP S/4HANA, SAP ECC, SAP HANA, SAP GRC, SAP MII, SAP BW, Infor Syteline, and Baan environments",
         "Evaluate access requests for appropriate authorization and potential Segregation of Duties (SoD) conflicts, ensuring access aligns with business responsibilities and security policies",
         "Support security activities associated with SAP support package upgrades, including access validation, testing, issue resolution, and post-upgrade verification",
-        "Contribute to the ongoing SAP GRC consolidation initiative across the Americas and Europe, helping standardize access governance, approval workflows, controls, and security processes across regional environments",
+        "Selected to support an upcoming SAP GRC consolidation initiative across the Americas and Europe; planned work has not yet started",
         "Maintain accurate documentation and audit trails for user access changes, approvals, security reviews, and compliance-related activities",
       ],
       featured: true,
@@ -424,16 +445,19 @@ export const siteData = {
       title: "Python Programming Language",
       issuer: "HackerRank",
       href: "https://www.hackerrank.com/certificates/iframe/3ff3457195a4",
+      priority: true,
     },
     {
       title: "Cybersecurity 101",
       issuer: "CodePath",
       href: "https://www.linkedin.com/posts/dipin-dawadi_certificate-of-completion-activity-7062963649803423744-30ah",
+      priority: true,
     },
     {
       title: "SQL (Intermediate)",
       issuer: "HackerRank",
       href: "https://www.hackerrank.com/certificates/2a9105be80c1",
+      priority: true,
     },
   ],
 };
